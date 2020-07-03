@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ApiGateway
 {
@@ -12,6 +14,16 @@ namespace ApiGateway
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureLogging(builder =>
+                    {
+                        builder.ClearProviders();
+                        builder.AddDebug().SetMinimumLevel(LogLevel.Error);
+                        builder.AddConsole();
+                    });
+                })
+                .ConfigureAppConfiguration((host, config) => { config.AddJsonFile("ocelot.json", true, true); });
     }
 }

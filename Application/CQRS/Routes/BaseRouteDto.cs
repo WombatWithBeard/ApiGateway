@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using Domain.Entities.Routes;
 
-namespace Domain.Entities.Ocelot
+namespace Application.CQRS.Routes
 {
-    public class Route
+    public class BaseRouteDto
     {
         public int RouteId { get; set; }
         public bool Enabled { get; set; }

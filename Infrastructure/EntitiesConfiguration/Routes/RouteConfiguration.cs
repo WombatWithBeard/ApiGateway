@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Ocelot;
+﻿using Domain.Entities.Routes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.EntitiesConfiguration.Ocelot
+namespace Infrastructure.EntitiesConfiguration.Routes
 {
     public class RouteConfiguration : IEntityTypeConfiguration<Route>
     {
@@ -10,11 +10,11 @@ namespace Infrastructure.EntitiesConfiguration.Ocelot
         {
             builder.ToTable("Routes");
 
-            builder.HasKey(e => e.RouteId);
-
-            builder.Property(e => e.RouteId)
-                .HasColumnName("Id")
-                .ValueGeneratedOnAdd();
+            // builder.HasKey(e => e.RouteId);
+            //
+            // builder.Property(e => e.RouteId)
+            //     .HasColumnName("Id")
+            //     .ValueGeneratedOnAdd();
         }
     }
 }

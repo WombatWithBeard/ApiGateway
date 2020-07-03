@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Ocelot;
+﻿using Domain.Entities.Routes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.EntitiesConfiguration.Ocelot
+namespace Infrastructure.EntitiesConfiguration.Routes
 {
     public class LoadBalancerOptionConfiguration : IEntityTypeConfiguration<LoadBalancerOption>
     {
@@ -10,11 +10,11 @@ namespace Infrastructure.EntitiesConfiguration.Ocelot
         {
             builder.ToTable("LoadBalancerOptions");
 
-            builder.HasKey(e => e.LoadBalancerOptionId);
-
-            builder.Property(e => e.LoadBalancerOptionId)
-                .HasColumnName("Id")
-                .ValueGeneratedOnAdd();
+            // builder.HasKey(e => e.LoadBalancerOptionId);
+            //
+            // builder.Property(e => e.LoadBalancerOptionId)
+            //     .HasColumnName("Id")
+            //     .ValueGeneratedOnAdd();
         }
     }
 }

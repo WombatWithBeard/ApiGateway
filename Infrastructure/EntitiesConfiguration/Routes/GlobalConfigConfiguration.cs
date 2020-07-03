@@ -1,8 +1,8 @@
-﻿using Domain.Entities.Ocelot;
+﻿using Domain.Entities.Routes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.EntitiesConfiguration.Ocelot
+namespace Infrastructure.EntitiesConfiguration.Routes
 {
     public class GlobalConfigConfiguration : IEntityTypeConfiguration<GlobalConfiguration>
     {
@@ -11,7 +11,7 @@ namespace Infrastructure.EntitiesConfiguration.Ocelot
             builder.ToTable("GlobalConfigurations");
 
             builder.HasKey(e => e.GlobalConfigurationId);
-
+            
             builder.Property(e => e.GlobalConfigurationId)
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();
