@@ -10,11 +10,11 @@ namespace Infrastructure.EntitiesConfiguration.Routes
         {
             builder.ToTable("Routes");
 
-            // builder.HasKey(e => e.RouteId);
-            //
-            // builder.Property(e => e.RouteId)
-            //     .HasColumnName("Id")
-            //     .ValueGeneratedOnAdd();
+            builder.HasKey(e => e.RouteId);
+
+            builder.Property(e => e.RouteId)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
         }
     }
 }

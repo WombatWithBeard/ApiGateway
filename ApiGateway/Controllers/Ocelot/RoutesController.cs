@@ -47,5 +47,21 @@ namespace ApiGateway.Controllers.Ocelot
                 };
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Seed()
+        {
+            try
+            {
+                
+
+                return Ok("Data seeded");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return Ok(e.Message);
+            }
+        }
     }
 }

@@ -22,6 +22,8 @@ namespace Infrastructure.Tools
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            TestSeeder.Seed(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApiGetwayDbContext).Assembly);
         }
     }

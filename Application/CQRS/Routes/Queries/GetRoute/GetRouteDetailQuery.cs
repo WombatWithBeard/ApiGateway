@@ -32,6 +32,9 @@ namespace Application.CQRS.Routes.Queries.GetRoute
                 var vm = new RouteDetailViewModel
                 {
                     Dto = await _context.Routes.Where(d => d.RouteId == request.Id)
+                        .Include(p => p.AuthenticationOptions)
+                        .Include(p => p.LoadBalancerOptions)
+                        .Include(p => p.DownstreamHostAndPorts)
                         .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
                         .SingleOrDefaultAsync(cancellationToken)
                 };

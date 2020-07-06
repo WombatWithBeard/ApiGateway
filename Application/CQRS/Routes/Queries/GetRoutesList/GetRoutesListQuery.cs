@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using AutoMapper;
@@ -27,6 +28,9 @@ namespace Application.CQRS.Routes.Queries.GetRoutesList
                 var vm = new RoutesListViewModel
                 {
                     ListDtos = await _context.Routes
+                        .Include(p => p.AuthenticationOptions)
+                        .Include(p => p.LoadBalancerOptions)
+                        .Include(p => p.DownstreamHostAndPorts)
                         .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken)
                 };

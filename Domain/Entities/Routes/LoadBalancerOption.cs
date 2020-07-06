@@ -1,16 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Text.Json.Serialization;
 using Domain.Entities.Enums;
 
 namespace Domain.Entities.Routes
 {
+    [Serializable]
     public class LoadBalancerOption
     {
-        public int LoadBalancerOptionId { get; set; }
+        [JsonIgnore] public int LoadBalancerOptionId { get; set; }
         public LoadBalancerTypes Type { get; set; }
         // public string Key { get; set; }
         // public int Expiry { get; set; }
         
-        [ForeignKey(nameof(Route))]
-        public int RouteId { get; set; }
+        [JsonIgnore] public int RouteId { get; set; }
+        
+        [JsonIgnore] public Route Route { get; set; }
     }
 }

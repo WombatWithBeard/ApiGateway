@@ -11,7 +11,7 @@ namespace Infrastructure.EntitiesConfiguration.Routes
             builder.ToTable("GlobalConfigurations");
 
             builder.HasKey(e => e.GlobalConfigurationId);
-            
+
             builder.Property(e => e.GlobalConfigurationId)
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd();

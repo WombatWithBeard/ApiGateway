@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
 
 namespace Domain.Entities.Routes
 {
     public class DownstreamHostAndPort
     {
-        public int DownstreamHostAndPortId { get; set; }
+        [JsonIgnore] public int DownstreamHostAndPortId { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
         
-        [ForeignKey(nameof(Route))]
-        public int RouteId { get; set; }
+        [JsonIgnore] public int RouteId { get; set; }
+        [JsonIgnore] public Route Route { get; set; }
     }
 }

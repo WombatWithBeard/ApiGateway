@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "api/routes/getall",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "ApiGateway": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "api/routes/getall",
       "applicationUrl": "https://localhost:6901;http://localhost:6900",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

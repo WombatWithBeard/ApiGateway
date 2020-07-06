@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
 
 namespace Domain.Entities.Routes
 {
     public class AuthenticationOption
     {
-        public string AuthenticationOptionId { get; set; }
+        [JsonIgnore] public int AuthenticationOptionId { get; set; }
         public string AuthenticationProviderKey { get; set; }
-        public List<string> AllowedScopes { get; set; }
+        public string[] AllowedScopes { get; set; }
         
-        [ForeignKey(nameof(Route))]
-        public int RouteId { get; set; }
+        [JsonIgnore] public int RouteId { get; set; }
+        
+        [JsonIgnore] public Route Route { get; set; }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ApiGateway.Migrations
 {
-    public partial class intial : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +12,7 @@ namespace ApiGateway.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     BaseUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,12 +25,12 @@ namespace ApiGateway.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Enabled = table.Column<bool>(nullable: false),
                     DownstreamPathTemplate = table.Column<string>(nullable: true),
                     DownstreamScheme = table.Column<string>(nullable: true),
                     UpstreamPathTemplate = table.Column<string>(nullable: true),
-                    UpstreamHttpMethod = table.Column<List<string>>(nullable: true)
+                    UpstreamHttpMethod = table.Column<string[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,9 +41,10 @@ namespace ApiGateway.Migrations
                 name: "AuthenticationOptions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AuthenticationProviderKey = table.Column<string>(nullable: true),
-                    AllowedScopes = table.Column<List<string>>(nullable: true),
+                    AllowedScopes = table.Column<string[]>(nullable: true),
                     RouteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +63,7 @@ namespace ApiGateway.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Host = table.Column<string>(nullable: true),
                     Port = table.Column<int>(nullable: false),
                     RouteId = table.Column<int>(nullable: false)
@@ -84,7 +84,7 @@ namespace ApiGateway.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Type = table.Column<int>(nullable: false),
                     RouteId = table.Column<int>(nullable: false)
                 },
@@ -97,6 +97,47 @@ namespace ApiGateway.Migrations
                         principalTable: "Routes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "GlobalConfigurations",
+                columns: new[] { "Id", "BaseUrl" },
+                values: new object[] { 1, "https://localhost:6900" });
+
+            migrationBuilder.InsertData(
+                table: "Routes",
+                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "UpstreamHttpMethod", "UpstreamPathTemplate" },
+                values: new object[,]
+                {
+                    { 1, "/{url}", "https", true, new[] { "GET", "POST", "PUT", "DELETE" }, "/ServiceOne/{url}" },
+                    { 2, "/{url}", "https", true, new[] { "GET", "POST", "PUT", "DELETE" }, "/ServiceTwo/{url}" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AuthenticationOptions",
+                columns: new[] { "Id", "AllowedScopes", "AuthenticationProviderKey", "RouteId" },
+                values: new object[,]
+                {
+                    { 1, new[] { "ApiOne", "ApiTwo" }, "TestKey", 1 },
+                    { 2, new[] { "ApiOne", "ApiTwo" }, "TestKey", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "DownstreamHostAndPorts",
+                columns: new[] { "Id", "Host", "Port", "RouteId" },
+                values: new object[,]
+                {
+                    { 1, "localhost", 3001, 1 },
+                    { 2, "localhost", 4003, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LoadBalancerOptions",
+                columns: new[] { "Id", "RouteId", "Type" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 }
                 });
 
             migrationBuilder.CreateIndex(

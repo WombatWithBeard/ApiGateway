@@ -56,6 +56,15 @@ namespace ApiGateway
                 app.UseDeveloperExceptionPage();
             }
 
+            // using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            // {
+            //     var context = scope.ServiceProvider.GetRequiredService<ApiGetwayDbContext>();
+            //     await context.Database.EnsureDeletedAsync();
+            //     await context.Database.EnsureCreatedAsync();
+            //     // await context.Database.MigrateAsync();
+            // }
+            
+
             app.UseHealthChecks("/health");
 
             app.UseOpenApi();

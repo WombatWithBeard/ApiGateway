@@ -10,11 +10,11 @@ namespace Infrastructure.EntitiesConfiguration.Routes
         {
             builder.ToTable("LoadBalancerOptions");
 
-            // builder.HasKey(e => e.LoadBalancerOptionId);
-            //
-            // builder.Property(e => e.LoadBalancerOptionId)
-            //     .HasColumnName("Id")
-            //     .ValueGeneratedOnAdd();
+            builder.HasKey(e => e.LoadBalancerOptionId);
+
+            builder.Property(e => e.LoadBalancerOptionId)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
         }
     }
 }
