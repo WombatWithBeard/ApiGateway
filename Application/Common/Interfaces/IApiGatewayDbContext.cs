@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Routes;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Domain.Entities.Routes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Common.Interfaces
@@ -10,5 +12,6 @@ namespace Application.Common.Interfaces
         DbSet<AuthenticationOption> AuthenticationOptions { get; set; }
         DbSet<DownstreamHostAndPort> DownstreamHostAndPorts { get; set; }
         DbSet<GlobalConfiguration> GlobalConfigurations { get; set; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

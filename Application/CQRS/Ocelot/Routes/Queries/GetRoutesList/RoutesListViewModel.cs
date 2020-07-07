@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Application.Common.Responses;
 
-namespace Application.CQRS.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
 {
     public class RoutesListViewModel : BaseResponse
     {

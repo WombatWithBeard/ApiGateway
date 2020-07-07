@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities.Routes;
 
-namespace Application.CQRS.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
 {
     public class RouteListDto : BaseRouteDto, IMapFrom<Route>
     {

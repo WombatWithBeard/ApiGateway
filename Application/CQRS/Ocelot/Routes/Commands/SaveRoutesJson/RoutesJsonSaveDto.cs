@@ -2,13 +2,13 @@
 using AutoMapper;
 using Domain.Entities.Routes;
 
-namespace Application.CQRS.Routes.Queries.GetRoute
+namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
 {
-    public class RouteDetailDto : BaseRouteDto, IMapFrom<Route>
+    public class RoutesJsonSaveDto : BaseRouteDto, IMapFrom<Route>
     {
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Route, RouteDetailDto>()
+            profile.CreateMap<Route, RoutesJsonSaveDto>()
                 .ForMember(d => d.RouteId, opt => opt.MapFrom(e => e.RouteId));
         }
     }

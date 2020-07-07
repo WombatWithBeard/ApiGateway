@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using AutoMapper;
@@ -7,7 +6,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
 {
     public class GetRoutesListQuery : IRequest<RoutesListViewModel>
     {
@@ -34,7 +33,7 @@ namespace Application.CQRS.Routes.Queries.GetRoutesList
                         .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken)
                 };
-
+                
                 return vm;
             }
         }

@@ -9,7 +9,7 @@ using Domain.Entities.Routes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Routes.Queries.GetRoute
+namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
 {
     public class GetRouteDetailQuery : IRequest<RouteDetailViewModel>
     {

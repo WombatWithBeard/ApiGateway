@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities.Routes;
 
-namespace Application.CQRS.Routes
+namespace Application.CQRS.Ocelot.Routes
 {
     public class BaseRouteDto
     {
