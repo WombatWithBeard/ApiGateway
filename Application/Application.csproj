@@ -17,8 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="CQRS\Ocelot\DownstreamHostAndPort\Commands" />
-      <Folder Include="CQRS\Ocelot\DownstreamHostAndPort\Queries" />
       <Folder Include="CQRS\Ocelot\GlobalConfiguration\Commands" />
       <Folder Include="CQRS\Ocelot\GlobalConfiguration\Queries" />
       <Folder Include="CQRS\Ocelot\LoadBalancerOption\Commands" />

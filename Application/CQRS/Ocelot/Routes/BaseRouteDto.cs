@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Domain.Entities.Routes;
 
 namespace Application.CQRS.Ocelot.Routes
 {
     public class BaseRouteDto
     {
-        public int RouteId { get; set; }
-        public bool Enabled { get; set; }
+        [JsonIgnore] public int RouteId { get; set; }
+        [JsonIgnore] public bool Enabled { get; set; }
         public string DownstreamPathTemplate { get; set; }
         public string DownstreamScheme { get; set; }
         public List<DownstreamHostAndPort> DownstreamHostAndPorts { get; set; }

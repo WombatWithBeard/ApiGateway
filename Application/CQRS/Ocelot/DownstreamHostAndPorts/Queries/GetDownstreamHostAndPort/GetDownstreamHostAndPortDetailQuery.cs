@@ -9,13 +9,13 @@ using Domain.Entities.Routes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOption
+namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPort
 {
-    public class GetAuthenticationOptionDetailQuery : IRequest<AuthenticationOptionDetailViewModel>
+    public class GetDownstreamHostAndPortDetailQuery: IRequest<DownstreamHostAndPortDetailViewModel>
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetAuthenticationOptionDetailQuery, AuthenticationOptionDetailViewModel>
+        public class Handler : IRequestHandler<GetDownstreamHostAndPortDetailQuery, DownstreamHostAndPortDetailViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -26,18 +26,18 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticatio
                 _mapper = mapper;
             }
 
-            public async Task<AuthenticationOptionDetailViewModel> Handle(GetAuthenticationOptionDetailQuery request,
+            public async Task<DownstreamHostAndPortDetailViewModel> Handle(GetDownstreamHostAndPortDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                var vm = new AuthenticationOptionDetailViewModel
+                var vm = new DownstreamHostAndPortDetailViewModel
                 {
-                    Dto = await _context.AuthenticationOptions.Where(d => d.AuthenticationOptionId == request.Id)
-                        .ProjectTo<AuthenticationOptionDetailDto>(_mapper.ConfigurationProvider)
+                    Dto = await _context.DownstreamHostAndPorts.Where(d => d.DownstreamHostAndPortId == request.Id)
+                        .ProjectTo<DownstreamHostAndPortDetailDto>(_mapper.ConfigurationProvider)
                         .SingleOrDefaultAsync(cancellationToken)
                 };
 
                 if (vm.Dto == null)
-                    throw new NotFoundException(nameof(AuthenticationOption), request.Id);
+                    throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
 
                 return vm;
             }

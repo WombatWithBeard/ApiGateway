@@ -33,6 +33,7 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Commands.UpdateAuthentic
 
                 entity.AllowedScopes = request.AllowedScopes;
                 entity.AuthenticationProviderKey = request.AuthenticationProviderKey;
+                entity.RouteId = request.RouteId;
 
                 await _context.SaveChangesAsync(cancellationToken);
 

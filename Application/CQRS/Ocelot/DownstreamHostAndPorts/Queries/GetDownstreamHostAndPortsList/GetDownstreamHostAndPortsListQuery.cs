@@ -6,11 +6,11 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOptionsList
+namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPortsList
 {
-    public class GetAuthenticationOptionsListQuery : IRequest<AuthenticationOptionsListViewModel>
+    public class GetDownstreamHostAndPortsListQuery : IRequest<DownstreamHostAndPortsListViewModel>
     {
-        public class Handler : IRequestHandler<GetAuthenticationOptionsListQuery, AuthenticationOptionsListViewModel>
+        public class Handler : IRequestHandler<GetDownstreamHostAndPortsListQuery, DownstreamHostAndPortsListViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -21,13 +21,13 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticatio
                 _mapper = mapper;
             }
 
-            public async Task<AuthenticationOptionsListViewModel> Handle(GetAuthenticationOptionsListQuery request,
+            public async Task<DownstreamHostAndPortsListViewModel> Handle(GetDownstreamHostAndPortsListQuery request,
                 CancellationToken cancellationToken)
             {
-                var vm = new AuthenticationOptionsListViewModel
+                var vm = new DownstreamHostAndPortsListViewModel
                 {
-                    ListDtos = await _context.AuthenticationOptions
-                        .ProjectTo<AuthenticationOptionsListDto>(_mapper.ConfigurationProvider)
+                    ListDtos = await _context.DownstreamHostAndPorts
+                        .ProjectTo<DownstreamHostAndPortsListDto>(_mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken)
                 };
 
