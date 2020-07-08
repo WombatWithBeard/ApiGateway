@@ -58,38 +58,14 @@ namespace ApiGateway.Controllers.Ocelot
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RouteDetailViewModel>> Get(int id)
         {
-            try
-            {
-                return await Mediator.Send(new GetRouteDetailQuery {Id = id});
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return new RouteDetailViewModel
-                {
-                    Success = false,
-                    Message = e.Message
-                };
-            }
+            return await Mediator.Send(new GetRouteDetailQuery {Id = id});
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<RoutesListViewModel>> GetAll()
         {
-            try
-            {
-                return await Mediator.Send(new GetRoutesListQuery());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return new RoutesListViewModel
-                {
-                    Success = false,
-                    Message = e.Message
-                };
-            }
+            return await Mediator.Send(new GetRoutesListQuery());
         }
     }
 }

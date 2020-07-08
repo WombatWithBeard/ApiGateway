@@ -7,11 +7,11 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOptionsList
 {
-    public class GetRoutesListQuery : IRequest<RoutesListViewModel>
+    public class GetLoadBalancerOptionsListQuery : IRequest<LoadBalancerOptionsListViewModel>
     {
-        public class Handler : IRequestHandler<GetRoutesListQuery, RoutesListViewModel>
+        public class Handler : IRequestHandler<GetLoadBalancerOptionsListQuery, LoadBalancerOptionsListViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -22,27 +22,24 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
                 _mapper = mapper;
             }
 
-            public async Task<RoutesListViewModel> Handle(GetRoutesListQuery request,
+            public async Task<LoadBalancerOptionsListViewModel> Handle(GetLoadBalancerOptionsListQuery request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
-                    var vm = new RoutesListViewModel
+                    var vm = new LoadBalancerOptionsListViewModel
                     {
-                        ListDtos = await _context.Routes.AsNoTracking()
-                            .Include(p => p.AuthenticationOptions)
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
+                        ListDtos = await _context.LoadBalancerOptions.AsNoTracking()
+                            .ProjectTo<LoadBalancerOptionsListDto>(_mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken)
                     };
-                
+
                     return vm;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    return new RoutesListViewModel {Success = false, Message = e.Message};
+                    return new LoadBalancerOptionsListViewModel {Success = false, Message = e.Message};
                 }
             }
         }

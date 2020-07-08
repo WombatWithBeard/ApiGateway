@@ -10,13 +10,13 @@ using Domain.Entities.Routes;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOption
+namespace Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfiguration
 {
-    public class GetAuthenticationOptionDetailQuery : IRequest<AuthenticationOptionDetailViewModel>
+    public class GetGlobalConfigurationDetailQuery : IRequest<GlobalConfigurationDetailViewModel>
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetAuthenticationOptionDetailQuery, AuthenticationOptionDetailViewModel>
+        public class Handler : IRequestHandler<GetGlobalConfigurationDetailQuery, GlobalConfigurationDetailViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -27,28 +27,28 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticatio
                 _mapper = mapper;
             }
 
-            public async Task<AuthenticationOptionDetailViewModel> Handle(GetAuthenticationOptionDetailQuery request,
+            public async Task<GlobalConfigurationDetailViewModel> Handle(GetGlobalConfigurationDetailQuery request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
-                    var vm = new AuthenticationOptionDetailViewModel
+                    var vm = new GlobalConfigurationDetailViewModel
                     {
-                        Dto = await _context.AuthenticationOptions.AsNoTracking()
-                            .Where(d => d.AuthenticationOptionId == request.Id)
-                            .ProjectTo<AuthenticationOptionDetailDto>(_mapper.ConfigurationProvider)
+                        Dto = await _context.GlobalConfigurations.AsNoTracking()
+                            .Where(d => d.GlobalConfigurationId == request.Id)
+                            .ProjectTo<GlobalConfigurationDetailDto>(_mapper.ConfigurationProvider)
                             .SingleOrDefaultAsync(cancellationToken)
                     };
 
                     if (vm.Dto == null)
-                        throw new NotFoundException(nameof(AuthenticationOption), request.Id);
+                        throw new NotFoundException(nameof(GlobalConfiguration), request.Id);
 
                     return vm;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    return new AuthenticationOptionDetailViewModel {Success = false, Message = e.Message};
+                    return new GlobalConfigurationDetailViewModel {Success = false, Message = e.Message};
                 }
             }
         }

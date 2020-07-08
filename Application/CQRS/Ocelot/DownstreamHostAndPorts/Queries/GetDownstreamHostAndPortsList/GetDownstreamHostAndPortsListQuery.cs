@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using AutoMapper;
@@ -24,14 +25,22 @@ namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHo
             public async Task<DownstreamHostAndPortsListViewModel> Handle(GetDownstreamHostAndPortsListQuery request,
                 CancellationToken cancellationToken)
             {
-                var vm = new DownstreamHostAndPortsListViewModel
+                try
                 {
-                    ListDtos = await _context.DownstreamHostAndPorts
-                        .ProjectTo<DownstreamHostAndPortsListDto>(_mapper.ConfigurationProvider)
-                        .ToListAsync(cancellationToken)
-                };
+                    var vm = new DownstreamHostAndPortsListViewModel
+                    {
+                        ListDtos = await _context.DownstreamHostAndPorts.AsNoTracking()
+                            .ProjectTo<DownstreamHostAndPortsListDto>(_mapper.ConfigurationProvider)
+                            .ToListAsync(cancellationToken)
+                    };
 
-                return vm;
+                    return vm;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return new DownstreamHostAndPortsListViewModel {Success = false, Message = e.Message};
+                }
             }
         }
     }

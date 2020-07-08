@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
@@ -29,20 +30,29 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
             public async Task<RouteDetailViewModel> Handle(GetRouteDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                var vm = new RouteDetailViewModel
+                try
                 {
-                    Dto = await _context.Routes.Where(d => d.RouteId == request.Id)
-                        .Include(p => p.AuthenticationOptions)
-                        .Include(p => p.LoadBalancerOptions)
-                        .Include(p => p.DownstreamHostAndPorts)
-                        .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
-                        .SingleOrDefaultAsync(cancellationToken)
-                };
+                    var vm = new RouteDetailViewModel
+                    {
+                        Dto = await _context.Routes.AsNoTracking()
+                            .Where(d => d.RouteId == request.Id)
+                            .Include(p => p.AuthenticationOptions)
+                            .Include(p => p.LoadBalancerOptions)
+                            .Include(p => p.DownstreamHostAndPorts)
+                            .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
+                            .SingleOrDefaultAsync(cancellationToken)
+                    };
 
-                if (vm.Dto == null)
-                    throw new NotFoundException(nameof(Route), request.Id);
+                    if (vm.Dto == null)
+                        throw new NotFoundException(nameof(Route), request.Id);
 
-                return vm;
+                    return vm;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return new RouteDetailViewModel {Success = false, Message = e.Message};
+                }
             }
         }
     }

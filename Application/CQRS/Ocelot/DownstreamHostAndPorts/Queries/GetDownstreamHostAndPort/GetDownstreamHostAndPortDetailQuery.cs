@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
@@ -11,11 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPort
 {
-    public class GetDownstreamHostAndPortDetailQuery: IRequest<DownstreamHostAndPortDetailViewModel>
+    public class GetDownstreamHostAndPortDetailQuery : IRequest<DownstreamHostAndPortDetailViewModel>
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetDownstreamHostAndPortDetailQuery, DownstreamHostAndPortDetailViewModel>
+        public class Handler : IRequestHandler<GetDownstreamHostAndPortDetailQuery, DownstreamHostAndPortDetailViewModel
+        >
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -29,17 +31,26 @@ namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHo
             public async Task<DownstreamHostAndPortDetailViewModel> Handle(GetDownstreamHostAndPortDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                var vm = new DownstreamHostAndPortDetailViewModel
+                try
                 {
-                    Dto = await _context.DownstreamHostAndPorts.Where(d => d.DownstreamHostAndPortId == request.Id)
-                        .ProjectTo<DownstreamHostAndPortDetailDto>(_mapper.ConfigurationProvider)
-                        .SingleOrDefaultAsync(cancellationToken)
-                };
+                    var vm = new DownstreamHostAndPortDetailViewModel
+                    {
+                        Dto = await _context.DownstreamHostAndPorts.AsNoTracking()
+                            .Where(d => d.DownstreamHostAndPortId == request.Id)
+                            .ProjectTo<DownstreamHostAndPortDetailDto>(_mapper.ConfigurationProvider)
+                            .SingleOrDefaultAsync(cancellationToken)
+                    };
 
-                if (vm.Dto == null)
-                    throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
+                    if (vm.Dto == null)
+                        throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
 
-                return vm;
+                    return vm;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return new DownstreamHostAndPortDetailViewModel {Success = false, Message = e.Message};
+                }
             }
         }
     }

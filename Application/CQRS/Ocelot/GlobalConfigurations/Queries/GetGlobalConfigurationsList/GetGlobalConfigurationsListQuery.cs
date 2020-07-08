@@ -7,11 +7,11 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfigurationsList
 {
-    public class GetRoutesListQuery : IRequest<RoutesListViewModel>
+    public class GetGlobalConfigurationsListQuery : IRequest<GlobalConfigurationsListViewModel>
     {
-        public class Handler : IRequestHandler<GetRoutesListQuery, RoutesListViewModel>
+        public class Handler : IRequestHandler<GetGlobalConfigurationsListQuery, GlobalConfigurationsListViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -22,27 +22,24 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
                 _mapper = mapper;
             }
 
-            public async Task<RoutesListViewModel> Handle(GetRoutesListQuery request,
+            public async Task<GlobalConfigurationsListViewModel> Handle(GetGlobalConfigurationsListQuery request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
-                    var vm = new RoutesListViewModel
+                    var vm = new GlobalConfigurationsListViewModel
                     {
-                        ListDtos = await _context.Routes.AsNoTracking()
-                            .Include(p => p.AuthenticationOptions)
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
+                        ListDtos = await _context.GlobalConfigurations.AsNoTracking()
+                            .ProjectTo<GlobalConfigurationsListDto>(_mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken)
                     };
-                
+
                     return vm;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    return new RoutesListViewModel {Success = false, Message = e.Message};
+                    return new GlobalConfigurationsListViewModel {Success = false, Message = e.Message};
                 }
             }
         }
