@@ -28,14 +28,16 @@ namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
             {
                 var json = new RoutesJsonSaveViewModel
                 {
-                    ReRoutes = await _context.Routes
-                        .Include(p => p.AuthenticationOptions)
+                    ReRoutes = await _context.Routes.AsNoTracking()
                         .Include(p => p.LoadBalancerOptions)
                         .Include(p => p.DownstreamHostAndPorts)
+                        .Include(p => p.UpstreamHttpMethod)
+                        .Include(p => p.AuthenticationOptions)
+                        .ThenInclude(option => option.AllowedScopes)
                         .Where(r => r.Enabled)
                         .ProjectTo<RoutesJsonSaveDto>(_mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken),
-                    GlobalConfiguration = await _context.GlobalConfigurations.FindAsync()
+                    GlobalConfiguration = await _context.GlobalConfigurations.FirstOrDefaultAsync(cancellationToken: cancellationToken)
                 };
 
                 File.WriteAllText(Directory.GetCurrentDirectory() + @"\ocelot2.json", JsonSerializer.Serialize(json));

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.EntitiesConfiguration.Routes
 {
-    public class AuthenticationOptionConfiguration: IEntityTypeConfiguration<AuthenticationOption>
+    public class AuthenticationOptionConfiguration : IEntityTypeConfiguration<AuthenticationOption>
     {
         public void Configure(EntityTypeBuilder<AuthenticationOption> builder)
         {

@@ -29,8 +29,7 @@ namespace ApiGateway.Migrations
                     Enabled = table.Column<bool>(nullable: false),
                     DownstreamPathTemplate = table.Column<string>(nullable: true),
                     DownstreamScheme = table.Column<string>(nullable: true),
-                    UpstreamPathTemplate = table.Column<string>(nullable: true),
-                    UpstreamHttpMethod = table.Column<string[]>(nullable: true)
+                    UpstreamPathTemplate = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,7 +43,6 @@ namespace ApiGateway.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AuthenticationProviderKey = table.Column<string>(nullable: true),
-                    AllowedScopes = table.Column<string[]>(nullable: true),
                     RouteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -99,6 +97,47 @@ namespace ApiGateway.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UpstreamHttpsMethods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(nullable: true),
+                    RouteId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UpstreamHttpsMethods", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UpstreamHttpsMethods_Routes_RouteId",
+                        column: x => x.RouteId,
+                        principalTable: "Routes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Scopes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    ExternalId = table.Column<int>(nullable: false),
+                    ScopeName = table.Column<string>(nullable: true),
+                    AuthenticationOptionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scopes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Scopes_AuthenticationOptions_AuthenticationOptionId",
+                        column: x => x.AuthenticationOptionId,
+                        principalTable: "AuthenticationOptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "GlobalConfigurations",
                 columns: new[] { "Id", "BaseUrl" },
@@ -106,20 +145,20 @@ namespace ApiGateway.Migrations
 
             migrationBuilder.InsertData(
                 table: "Routes",
-                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "UpstreamHttpMethod", "UpstreamPathTemplate" },
+                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "UpstreamPathTemplate" },
                 values: new object[,]
                 {
-                    { 1, "/{url}", "https", true, new[] { "GET", "POST", "PUT", "DELETE" }, "/ServiceOne/{url}" },
-                    { 2, "/{url}", "https", true, new[] { "GET", "POST", "PUT", "DELETE" }, "/ServiceTwo/{url}" }
+                    { 1, "/{url}", "https", true, "/ServiceOne/{url}" },
+                    { 2, "/{url}", "https", true, "/ServiceTwo/{url}" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AuthenticationOptions",
-                columns: new[] { "Id", "AllowedScopes", "AuthenticationProviderKey", "RouteId" },
+                columns: new[] { "Id", "AuthenticationProviderKey", "RouteId" },
                 values: new object[,]
                 {
-                    { 1, new[] { "ApiOne", "ApiTwo" }, "TestKey", 1 },
-                    { 2, new[] { "ApiOne", "ApiTwo" }, "TestKey", 2 }
+                    { 1, "TestKey", 1 },
+                    { 2, "TestKey", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -140,6 +179,24 @@ namespace ApiGateway.Migrations
                     { 2, 2, 1 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "UpstreamHttpsMethods",
+                columns: new[] { "Id", "Name", "RouteId" },
+                values: new object[,]
+                {
+                    { 1, "Get", 1 },
+                    { 2, "Post", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Scopes",
+                columns: new[] { "Id", "AuthenticationOptionId", "ExternalId", "ScopeName" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "ApiOne" },
+                    { 2, 2, 2, "ApiOne" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AuthenticationOptions_RouteId",
                 table: "AuthenticationOptions",
@@ -156,13 +213,20 @@ namespace ApiGateway.Migrations
                 table: "LoadBalancerOptions",
                 column: "RouteId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scopes_AuthenticationOptionId",
+                table: "Scopes",
+                column: "AuthenticationOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UpstreamHttpsMethods_RouteId",
+                table: "UpstreamHttpsMethods",
+                column: "RouteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AuthenticationOptions");
-
             migrationBuilder.DropTable(
                 name: "DownstreamHostAndPorts");
 
@@ -171,6 +235,15 @@ namespace ApiGateway.Migrations
 
             migrationBuilder.DropTable(
                 name: "LoadBalancerOptions");
+
+            migrationBuilder.DropTable(
+                name: "Scopes");
+
+            migrationBuilder.DropTable(
+                name: "UpstreamHttpsMethods");
+
+            migrationBuilder.DropTable(
+                name: "AuthenticationOptions");
 
             migrationBuilder.DropTable(
                 name: "Routes");

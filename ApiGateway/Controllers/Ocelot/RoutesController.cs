@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.CQRS.Ocelot.Routes.Commands.CreateRoute;
 using Application.CQRS.Ocelot.Routes.Commands.DeleteRoute;
 using Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson;
@@ -13,7 +12,7 @@ namespace ApiGateway.Controllers.Ocelot
 {
     public class RoutesController : BaseController
     {
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> SaveRoutes()

@@ -47,5 +47,6 @@
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:6900"
-  }
+  },
+  "Routes": []
 }

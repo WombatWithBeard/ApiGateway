@@ -9,6 +9,5 @@ namespace Domain.Entities.Routes
         public int Port { get; set; }
         
         [JsonIgnore] public int RouteId { get; set; }
-        [JsonIgnore] public Route Route { get; set; }
     }
 }

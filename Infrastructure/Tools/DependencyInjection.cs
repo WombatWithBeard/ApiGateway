@@ -11,7 +11,7 @@ namespace Infrastructure.Tools
         public static IServiceCollection AddInfrastructure(this IServiceCollection service,
             IConfiguration configuration)
         {
-            service.AddDbContext<ApiGetwayDbContext>(builder =>
+            service.AddDbContext<ApiGatewayDbContext>(builder =>
                 builder.UseNpgsql(configuration.GetConnectionString(ConnectionConsts.ApiGatewayConnectionString),
                     b =>
                     {
@@ -19,7 +19,7 @@ namespace Infrastructure.Tools
                         b.SetPostgresVersion(9,6);
                     }));
 
-            service.AddScoped<IApiGatewayDbContext>(provider => provider.GetService<ApiGetwayDbContext>());
+            service.AddScoped<IApiGatewayDbContext>(provider => provider.GetService<ApiGatewayDbContext>());
 
             return service;
         }

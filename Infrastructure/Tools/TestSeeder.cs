@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Domain.Entities.Common;
 using Domain.Entities.Enums;
 using Domain.Entities.Routes;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,24 @@ namespace Infrastructure.Tools
                 SeedAuthOptions(modelBuilder, i);
                 SeedLoadBalancer(modelBuilder, i);
                 SeedDownstreamHostAndPort(modelBuilder, i);
+
+                SeedScopes(modelBuilder, i);
+                SeedHttpMethods(modelBuilder, i);
             }
 
             SeedGlobalConfig(modelBuilder);
+        }
+
+        private static void SeedHttpMethods(ModelBuilder modelBuilder, in int i)
+        {
+            modelBuilder.Entity<UpstreamHttpsMethod>()
+                .HasData(new UpstreamHttpsMethod {Id = i, RouteId = i, Name = i == 1 ? "Get" : "Post"});
+        }
+
+        private static void SeedScopes(ModelBuilder modelBuilder, in int i)
+        {
+            modelBuilder.Entity<Scope>().HasData(new Scope
+                {ScopeId = i, AuthenticationOptionId = i, ExternalId = i, ScopeName = "ApiOne"});
         }
 
         private static void SeedGlobalConfig(ModelBuilder modelBuilder)
@@ -52,11 +68,6 @@ namespace Infrastructure.Tools
             modelBuilder.Entity<AuthenticationOption>().HasData(new AuthenticationOption
             {
                 AuthenticationOptionId = i,
-                AllowedScopes = new List<string>
-                {
-                    "ApiOne",
-                    "ApiTwo"
-                }.ToArray(),
                 AuthenticationProviderKey = "TestKey",
                 RouteId = i
             });
@@ -73,14 +84,7 @@ namespace Infrastructure.Tools
                     RouteId = id,
                     DownstreamScheme = "https",
                     DownstreamPathTemplate = "/{url}",
-                    UpstreamPathTemplate = i == 2 ? "/ServiceTwo/{url}" : "/ServiceOne/{url}",
-                    UpstreamHttpMethod = new List<string>
-                    {
-                        "GET",
-                        "POST",
-                        "PUT",
-                        "DELETE"
-                    }.ToArray()
+                    UpstreamPathTemplate = i == 2 ? "/ServiceTwo/{url}" : "/ServiceOne/{url}"
                 }
             });
         }

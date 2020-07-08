@@ -13,7 +13,5 @@ namespace Domain.Entities.Routes
         // public int Expiry { get; set; }
         
         [JsonIgnore] public int RouteId { get; set; }
-        
-        [JsonIgnore] public Route Route { get; set; }
     }
 }

@@ -36,9 +36,11 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
                     {
                         Dto = await _context.Routes.AsNoTracking()
                             .Where(d => d.RouteId == request.Id)
-                            .Include(p => p.AuthenticationOptions)
                             .Include(p => p.LoadBalancerOptions)
                             .Include(p => p.DownstreamHostAndPorts)
+                            .Include(p => p.UpstreamHttpMethod)
+                            .Include(p => p.AuthenticationOptions)
+                            .ThenInclude(option => option.AllowedScopes)
                             .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
                             .SingleOrDefaultAsync(cancellationToken)
                     };

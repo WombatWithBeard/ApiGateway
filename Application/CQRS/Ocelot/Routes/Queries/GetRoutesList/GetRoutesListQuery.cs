@@ -30,13 +30,15 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
                     var vm = new RoutesListViewModel
                     {
                         ListDtos = await _context.Routes.AsNoTracking()
-                            .Include(p => p.AuthenticationOptions)
                             .Include(p => p.LoadBalancerOptions)
                             .Include(p => p.DownstreamHostAndPorts)
+                            .Include(p => p.UpstreamHttpMethod)
+                            .Include(p => p.AuthenticationOptions)
+                            .ThenInclude(option => option.AllowedScopes)
                             .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken)
                     };
-                
+
                     return vm;
                 }
                 catch (Exception e)
