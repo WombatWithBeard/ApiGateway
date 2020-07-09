@@ -16,7 +16,7 @@ namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
         public ICollection<DownstreamHostAndPort> DownstreamHostAndPorts { get; set; }
         public string UpstreamPathTemplate { get; set; }
         public List<string> UpstreamHttpMethod { get; set; }
-        public AuthenticationOption AuthenticationOptions { get; set; }
+        public AuthenticationOptionJsonSaveDto AuthenticationOptions { get; set; }
         public LoadBalancerOption LoadBalancerOptions { get; set; }
         
         public void Mapping(Profile profile)

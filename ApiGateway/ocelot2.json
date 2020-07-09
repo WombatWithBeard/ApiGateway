@@ -1,1 +1,53 @@
-{"ReRoutes":[{"DownstreamPathTemplate":"/{url}","DownstreamScheme":"https","DownstreamHostAndPorts":[{"Host":"localhost","Port":3001}],"UpstreamPathTemplate":"/ServiceOne/{url}","UpstreamHttpMethod":["Get"],"AuthenticationOptions":{"AuthenticationProviderKey":"TestKey","AllowedScopes":[{"ScopeName":"ApiOne"}]},"LoadBalancerOptions":{"Type":1}},{"DownstreamPathTemplate":"/{url}","DownstreamScheme":"https","DownstreamHostAndPorts":[{"Host":"localhost","Port":4003}],"UpstreamPathTemplate":"/ServiceTwo/{url}","UpstreamHttpMethod":["Post"],"AuthenticationOptions":{"AuthenticationProviderKey":"TestKey","AllowedScopes":[{"ScopeName":"ApiOne"}]},"LoadBalancerOptions":{"Type":1}}],"GlobalConfiguration":{"BaseUrl":"https://localhost:6900"}}
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 3001
+        }
+      ],
+      "UpstreamPathTemplate": "/ServiceOne/{url}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": [
+          "ApiOne"
+        ]
+      },
+      "LoadBalancerOptions": {
+        "Type": 1
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4003
+        }
+      ],
+      "UpstreamPathTemplate": "/ServiceTwo/{url}",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": [
+          "ApiOne"
+        ]
+      },
+      "LoadBalancerOptions": {
+        "Type": 1
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:6900"
+  }
+}

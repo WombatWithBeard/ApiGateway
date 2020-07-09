@@ -33,7 +33,8 @@ namespace Application.CQRS.Ocelot.Routes.Commands.UpdateRoute
                 entity.DownstreamScheme = request.DownstreamScheme;
                 entity.DownstreamPathTemplate = request.DownstreamPathTemplate;
                 entity.UpstreamHttpMethod = request.UpstreamHttpMethod;
-                entity.UpstreamPathTemplate = entity.UpstreamPathTemplate;
+                entity.UpstreamPathTemplate = request.UpstreamPathTemplate;
+                entity.Priority = request.Priority;
 
                 await _context.SaveChangesAsync(cancellationToken);
                 

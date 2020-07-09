@@ -14,7 +14,7 @@ namespace EntitySeedData.Entities.Ocelot
             {
                 list.Add(new LoadBalancerOption()
                 {
-                    Type = LoadBalancerTypes.RoundRobin,
+                    Type = LoadBalancerTypes.RoundRobin.ToString(),
                     LoadBalancerOptionId = i,
                     RouteId = i
                 });

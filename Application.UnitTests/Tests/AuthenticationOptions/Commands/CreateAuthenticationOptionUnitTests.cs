@@ -19,7 +19,7 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
         public async Task Handle_GivenValidResult()
         {
             //Arrange
-            var command = new CreateAuthenticationOptionCommand {AuthenticationOptionId = 15, RouteId = 1};
+            var command = new CreateAuthenticationOptionCommand {AuthenticationOptionId = 35, RouteId = 1};
             
             //Act
             var result = await _handler.Handle(command, CancellationToken.None);

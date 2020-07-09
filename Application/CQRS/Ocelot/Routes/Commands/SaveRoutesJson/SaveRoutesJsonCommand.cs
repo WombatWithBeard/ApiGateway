@@ -28,7 +28,7 @@ namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
             {
                 var json = new RoutesJsonSaveViewModel
                 {
-                    ReRoutes = await _context.Routes.AsNoTracking()
+                    Routes = await _context.Routes.AsNoTracking()
                         .Include(p => p.LoadBalancerOptions)
                         .Include(p => p.DownstreamHostAndPorts)
                         .Include(p => p.UpstreamHttpMethod)
