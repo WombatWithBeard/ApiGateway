@@ -30,26 +30,18 @@ namespace Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOpt
             public async Task<LoadBalancerOptionDetailViewModel> Handle(GetLoadBalancerOptionDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new LoadBalancerOptionDetailViewModel
                 {
-                    var vm = new LoadBalancerOptionDetailViewModel
-                    {
-                        Dto = await _context.LoadBalancerOptions.AsNoTracking()
-                            .Where(d => d.LoadBalancerOptionId == request.Id)
-                            .ProjectTo<LoadBalancerOptionDetailDto>(_mapper.ConfigurationProvider)
-                            .SingleOrDefaultAsync(cancellationToken)
-                    };
+                    Dto = await _context.LoadBalancerOptions.AsNoTracking()
+                        .Where(d => d.LoadBalancerOptionId == request.Id)
+                        .ProjectTo<LoadBalancerOptionDetailDto>(_mapper.ConfigurationProvider)
+                        .SingleOrDefaultAsync(cancellationToken)
+                };
 
-                    if (vm.Dto == null)
-                        throw new NotFoundException(nameof(LoadBalancerOption), request.Id);
+                if (vm.Dto == null)
+                    throw new NotFoundException(nameof(LoadBalancerOption), request.Id);
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new LoadBalancerOptionDetailViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

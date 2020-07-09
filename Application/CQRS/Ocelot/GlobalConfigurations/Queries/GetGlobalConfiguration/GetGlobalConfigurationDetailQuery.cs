@@ -30,26 +30,18 @@ namespace Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfigur
             public async Task<GlobalConfigurationDetailViewModel> Handle(GetGlobalConfigurationDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new GlobalConfigurationDetailViewModel
                 {
-                    var vm = new GlobalConfigurationDetailViewModel
-                    {
-                        Dto = await _context.GlobalConfigurations.AsNoTracking()
-                            .Where(d => d.GlobalConfigurationId == request.Id)
-                            .ProjectTo<GlobalConfigurationDetailDto>(_mapper.ConfigurationProvider)
-                            .SingleOrDefaultAsync(cancellationToken)
-                    };
+                    Dto = await _context.GlobalConfigurations.AsNoTracking()
+                        .Where(d => d.GlobalConfigurationId == request.Id)
+                        .ProjectTo<GlobalConfigurationDetailDto>(_mapper.ConfigurationProvider)
+                        .SingleOrDefaultAsync(cancellationToken)
+                };
 
-                    if (vm.Dto == null)
-                        throw new NotFoundException(nameof(GlobalConfiguration), request.Id);
+                if (vm.Dto == null)
+                    throw new NotFoundException(nameof(GlobalConfiguration), request.Id);
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new GlobalConfigurationDetailViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

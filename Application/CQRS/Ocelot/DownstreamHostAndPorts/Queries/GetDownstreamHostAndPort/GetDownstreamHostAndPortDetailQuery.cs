@@ -31,26 +31,18 @@ namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHo
             public async Task<DownstreamHostAndPortDetailViewModel> Handle(GetDownstreamHostAndPortDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new DownstreamHostAndPortDetailViewModel
                 {
-                    var vm = new DownstreamHostAndPortDetailViewModel
-                    {
-                        Dto = await _context.DownstreamHostAndPorts.AsNoTracking()
-                            .Where(d => d.DownstreamHostAndPortId == request.Id)
-                            .ProjectTo<DownstreamHostAndPortDetailDto>(_mapper.ConfigurationProvider)
-                            .SingleOrDefaultAsync(cancellationToken)
-                    };
+                    Dto = await _context.DownstreamHostAndPorts.AsNoTracking()
+                        .Where(d => d.DownstreamHostAndPortId == request.Id)
+                        .ProjectTo<DownstreamHostAndPortDetailDto>(_mapper.ConfigurationProvider)
+                        .SingleOrDefaultAsync(cancellationToken)
+                };
 
-                    if (vm.Dto == null)
-                        throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
+                if (vm.Dto == null)
+                    throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new DownstreamHostAndPortDetailViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

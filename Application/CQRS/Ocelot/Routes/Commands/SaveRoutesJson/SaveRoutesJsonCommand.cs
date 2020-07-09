@@ -40,7 +40,7 @@ namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
                     GlobalConfiguration = await _context.GlobalConfigurations.FirstOrDefaultAsync(cancellationToken: cancellationToken)
                 };
 
-                File.WriteAllText(Directory.GetCurrentDirectory() + @"\ocelot2.json", JsonSerializer.Serialize(json));
+                File.WriteAllText(Directory.GetCurrentDirectory() + @"\ocelot.json", JsonSerializer.Serialize(json));
 
                 return Unit.Value;
             }

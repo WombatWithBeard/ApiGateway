@@ -26,7 +26,7 @@ namespace ApiGateway.Controllers.Ocelot
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteAuthenticationOptionCommand() {Id = id});
+            await Mediator.Send(new DeleteAuthenticationOptionCommand {Id = id});
 
             return NoContent();
         }

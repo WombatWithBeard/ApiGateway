@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOption;
 using Application.UnitTests.Common;
 using Xunit;
@@ -19,7 +20,7 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Queries
         public async Task Handle_GivenValidResult()
         {
             //Arrange
-            const int validId = 1;
+            const int validId = 10;
             var query = new GetAuthenticationOptionDetailQuery{Id = validId};
 
             //Act
@@ -27,6 +28,19 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Queries
             
             //Assert
             Assert.NotNull(result.Dto);
+            Assert.IsType<AuthenticationOptionDetailViewModel>(result);
+            Assert.True(result.Success);
+        }        
+        
+        [Fact]
+        public async Task Handle_GivenNotFoundException()
+        {
+            //Arrange
+            const int validId = 50;
+            var query = new GetAuthenticationOptionDetailQuery{Id = validId};
+
+            //Assert
+            await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(query, CancellationToken.None));
         }
     }
 }

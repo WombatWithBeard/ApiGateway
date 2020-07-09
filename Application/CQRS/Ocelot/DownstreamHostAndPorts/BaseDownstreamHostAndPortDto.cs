@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Routes;
-
-namespace Application.CQRS.Ocelot.DownstreamHostAndPorts
+﻿namespace Application.CQRS.Ocelot.DownstreamHostAndPorts
 {
     public class BaseDownstreamHostAndPortDto
     {

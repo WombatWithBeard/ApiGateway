@@ -18,6 +18,8 @@ namespace Infrastructure.Tools
 
         protected ApiGatewayDbContext()
         {
+            //dotnet ef migrations add
+            //dotnet ef database update
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

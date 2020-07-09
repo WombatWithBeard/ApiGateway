@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities.Common;
-using Domain.Entities.Routes;
 
 namespace Application.CQRS.Ocelot.AuthenticationOptions
 {

@@ -25,22 +25,14 @@ namespace Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfigur
             public async Task<GlobalConfigurationsListViewModel> Handle(GetGlobalConfigurationsListQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new GlobalConfigurationsListViewModel
                 {
-                    var vm = new GlobalConfigurationsListViewModel
-                    {
-                        ListDtos = await _context.GlobalConfigurations.AsNoTracking()
-                            .ProjectTo<GlobalConfigurationsListDto>(_mapper.ConfigurationProvider)
-                            .ToListAsync(cancellationToken)
-                    };
+                    ListDtos = await _context.GlobalConfigurations.AsNoTracking()
+                        .ProjectTo<GlobalConfigurationsListDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync(cancellationToken)
+                };
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new GlobalConfigurationsListViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

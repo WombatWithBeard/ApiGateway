@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using Domain.Entities.Enums;
 
 namespace Domain.Entities.Routes
 {

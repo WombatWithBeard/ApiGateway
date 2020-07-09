@@ -2,7 +2,6 @@
 using Infrastructure.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ApiGateway.Migrations
@@ -52,8 +51,15 @@ namespace ApiGateway.Migrations
                         new
                         {
                             ScopeId = 2,
-                            AuthenticationOptionId = 2,
+                            AuthenticationOptionId = 1,
                             ExternalId = 2,
+                            ScopeName = "ApiTwo"
+                        },
+                        new
+                        {
+                            ScopeId = 3,
+                            AuthenticationOptionId = 2,
+                            ExternalId = 1,
                             ScopeName = "ApiOne"
                         });
                 });
@@ -89,6 +95,24 @@ namespace ApiGateway.Migrations
                         {
                             Id = 2,
                             Name = "Post",
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Put",
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Delete",
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Get",
                             RouteId = 2
                         });
                 });
@@ -164,6 +188,13 @@ namespace ApiGateway.Migrations
                         {
                             DownstreamHostAndPortId = 2,
                             Host = "localhost",
+                            Port = 3010,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            DownstreamHostAndPortId = 3,
+                            Host = "localhost",
                             Port = 4003,
                             RouteId = 2
                         });
@@ -203,8 +234,8 @@ namespace ApiGateway.Migrations
                     b.Property<int>("RouteId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
 
                     b.HasKey("LoadBalancerOptionId");
 
@@ -218,13 +249,13 @@ namespace ApiGateway.Migrations
                         {
                             LoadBalancerOptionId = 1,
                             RouteId = 1,
-                            Type = 1
+                            Type = "RoundRobin"
                         },
                         new
                         {
                             LoadBalancerOptionId = 2,
                             RouteId = 2,
-                            Type = 1
+                            Type = "RoundRobin"
                         });
                 });
 
@@ -245,6 +276,9 @@ namespace ApiGateway.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UpstreamPathTemplate")
                         .HasColumnType("text");
 
@@ -259,6 +293,7 @@ namespace ApiGateway.Migrations
                             DownstreamPathTemplate = "/{url}",
                             DownstreamScheme = "https",
                             Enabled = true,
+                            Priority = 0,
                             UpstreamPathTemplate = "/ServiceOne/{url}"
                         },
                         new
@@ -267,13 +302,14 @@ namespace ApiGateway.Migrations
                             DownstreamPathTemplate = "/{url}",
                             DownstreamScheme = "https",
                             Enabled = true,
+                            Priority = 0,
                             UpstreamPathTemplate = "/ServiceTwo/{url}"
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.Common.Scope", b =>
                 {
-                    b.HasOne("Domain.Entities.Routes.AuthenticationOption", "AuthenticationOption")
+                    b.HasOne("Domain.Entities.Routes.AuthenticationOption", null)
                         .WithMany("AllowedScopes")
                         .HasForeignKey("AuthenticationOptionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -282,7 +318,7 @@ namespace ApiGateway.Migrations
 
             modelBuilder.Entity("Domain.Entities.Common.UpstreamHttpsMethod", b =>
                 {
-                    b.HasOne("Domain.Entities.Routes.Route", "Route")
+                    b.HasOne("Domain.Entities.Routes.Route", null)
                         .WithMany("UpstreamHttpMethod")
                         .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -291,7 +327,7 @@ namespace ApiGateway.Migrations
 
             modelBuilder.Entity("Domain.Entities.Routes.AuthenticationOption", b =>
                 {
-                    b.HasOne("Domain.Entities.Routes.Route", "Route")
+                    b.HasOne("Domain.Entities.Routes.Route", null)
                         .WithOne("AuthenticationOptions")
                         .HasForeignKey("Domain.Entities.Routes.AuthenticationOption", "RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -300,7 +336,7 @@ namespace ApiGateway.Migrations
 
             modelBuilder.Entity("Domain.Entities.Routes.DownstreamHostAndPort", b =>
                 {
-                    b.HasOne("Domain.Entities.Routes.Route", "Route")
+                    b.HasOne("Domain.Entities.Routes.Route", null)
                         .WithMany("DownstreamHostAndPorts")
                         .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,7 +345,7 @@ namespace ApiGateway.Migrations
 
             modelBuilder.Entity("Domain.Entities.Routes.LoadBalancerOption", b =>
                 {
-                    b.HasOne("Domain.Entities.Routes.Route", "Route")
+                    b.HasOne("Domain.Entities.Routes.Route", null)
                         .WithOne("LoadBalancerOptions")
                         .HasForeignKey("Domain.Entities.Routes.LoadBalancerOption", "RouteId")
                         .OnDelete(DeleteBehavior.Cascade)

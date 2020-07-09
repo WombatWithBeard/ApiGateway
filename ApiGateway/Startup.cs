@@ -36,10 +36,12 @@ namespace ApiGateway
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidAudiences = new [] {"ApiOne", "ApiTwo"}
+                        ValidAudiences = new [] {"ApiOne", "ApiTwo"} //need to take it from db
                     };
                 });
 
+            services.AddHttpContextAccessor();
+            
             services.AddControllers();
             
             services.AddOcelot(Configuration);

@@ -25,22 +25,14 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticatio
             public async Task<AuthenticationOptionsListViewModel> Handle(GetAuthenticationOptionsListQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new AuthenticationOptionsListViewModel
                 {
-                    var vm = new AuthenticationOptionsListViewModel
-                    {
-                        ListDtos = await _context.AuthenticationOptions.AsNoTracking()
-                            .ProjectTo<AuthenticationOptionsListDto>(_mapper.ConfigurationProvider)
-                            .ToListAsync(cancellationToken)
-                    };
+                    ListDtos = await _context.AuthenticationOptions.AsNoTracking()
+                        .ProjectTo<AuthenticationOptionsListDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync(cancellationToken)
+                };
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new AuthenticationOptionsListViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

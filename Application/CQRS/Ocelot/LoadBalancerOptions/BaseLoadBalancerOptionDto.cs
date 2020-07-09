@@ -1,7 +1,4 @@
-﻿using Domain.Entities.Enums;
-using Domain.Entities.Routes;
-
-namespace Application.CQRS.Ocelot.LoadBalancerOptions
+﻿namespace Application.CQRS.Ocelot.LoadBalancerOptions
 {
     public class BaseLoadBalancerOptionDto
     {

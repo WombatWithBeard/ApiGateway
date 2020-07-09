@@ -25,27 +25,19 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
             public async Task<RoutesListViewModel> Handle(GetRoutesListQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new RoutesListViewModel
                 {
-                    var vm = new RoutesListViewModel
-                    {
-                        ListDtos = await _context.Routes.AsNoTracking()
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .Include(p => p.UpstreamHttpMethod)
-                            .Include(p => p.AuthenticationOptions)
-                            .ThenInclude(option => option.AllowedScopes)
-                            .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
-                            .ToListAsync(cancellationToken)
-                    };
+                    ListDtos = await _context.Routes.AsNoTracking()
+                        .Include(p => p.LoadBalancerOptions)
+                        .Include(p => p.DownstreamHostAndPorts)
+                        .Include(p => p.UpstreamHttpMethod)
+                        .Include(p => p.AuthenticationOptions)
+                        .ThenInclude(option => option.AllowedScopes)
+                        .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync(cancellationToken)
+                };
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new RoutesListViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

@@ -30,26 +30,18 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticatio
             public async Task<AuthenticationOptionDetailViewModel> Handle(GetAuthenticationOptionDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new AuthenticationOptionDetailViewModel
                 {
-                    var vm = new AuthenticationOptionDetailViewModel
-                    {
-                        Dto = await _context.AuthenticationOptions.AsNoTracking()
-                            .Where(d => d.AuthenticationOptionId == request.Id)
-                            .ProjectTo<AuthenticationOptionDetailDto>(_mapper.ConfigurationProvider)
-                            .SingleOrDefaultAsync(cancellationToken)
-                    };
+                    Dto = await _context.AuthenticationOptions.AsNoTracking()
+                        .Where(d => d.AuthenticationOptionId == request.Id)
+                        .ProjectTo<AuthenticationOptionDetailDto>(_mapper.ConfigurationProvider)
+                        .SingleOrDefaultAsync(cancellationToken)
+                };
 
-                    if (vm.Dto == null)
-                        throw new NotFoundException(nameof(AuthenticationOption), request.Id);
+                if (vm.Dto == null)
+                    throw new NotFoundException(nameof(AuthenticationOption), request.Id);
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new AuthenticationOptionDetailViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

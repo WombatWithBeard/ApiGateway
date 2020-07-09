@@ -29,7 +29,8 @@ namespace ApiGateway.Migrations
                     Enabled = table.Column<bool>(nullable: false),
                     DownstreamPathTemplate = table.Column<string>(nullable: true),
                     DownstreamScheme = table.Column<string>(nullable: true),
-                    UpstreamPathTemplate = table.Column<string>(nullable: true)
+                    UpstreamPathTemplate = table.Column<string>(nullable: true),
+                    Priority = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +84,7 @@ namespace ApiGateway.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Type = table.Column<int>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
                     RouteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -145,11 +146,11 @@ namespace ApiGateway.Migrations
 
             migrationBuilder.InsertData(
                 table: "Routes",
-                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "UpstreamPathTemplate" },
+                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "Priority", "UpstreamPathTemplate" },
                 values: new object[,]
                 {
-                    { 1, "/{url}", "https", true, "/ServiceOne/{url}" },
-                    { 2, "/{url}", "https", true, "/ServiceTwo/{url}" }
+                    { 1, "/{url}", "https", true, 0, "/ServiceOne/{url}" },
+                    { 2, "/{url}", "https", true, 0, "/ServiceTwo/{url}" }
                 });
 
             migrationBuilder.InsertData(
@@ -167,7 +168,8 @@ namespace ApiGateway.Migrations
                 values: new object[,]
                 {
                     { 1, "localhost", 3001, 1 },
-                    { 2, "localhost", 4003, 2 }
+                    { 2, "localhost", 3010, 1 },
+                    { 3, "localhost", 4003, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -175,8 +177,8 @@ namespace ApiGateway.Migrations
                 columns: new[] { "Id", "RouteId", "Type" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 2, 1 }
+                    { 1, 1, "RoundRobin" },
+                    { 2, 2, "RoundRobin" }
                 });
 
             migrationBuilder.InsertData(
@@ -185,7 +187,10 @@ namespace ApiGateway.Migrations
                 values: new object[,]
                 {
                     { 1, "Get", 1 },
-                    { 2, "Post", 2 }
+                    { 2, "Post", 1 },
+                    { 3, "Put", 1 },
+                    { 4, "Delete", 1 },
+                    { 5, "Get", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -194,7 +199,8 @@ namespace ApiGateway.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, "ApiOne" },
-                    { 2, 2, 2, "ApiOne" }
+                    { 2, 1, 2, "ApiTwo" },
+                    { 3, 2, 1, "ApiOne" }
                 });
 
             migrationBuilder.CreateIndex(

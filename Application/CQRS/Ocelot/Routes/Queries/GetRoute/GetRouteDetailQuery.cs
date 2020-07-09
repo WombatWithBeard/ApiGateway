@@ -30,31 +30,23 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
             public async Task<RouteDetailViewModel> Handle(GetRouteDetailQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new RouteDetailViewModel
                 {
-                    var vm = new RouteDetailViewModel
-                    {
-                        Dto = await _context.Routes.AsNoTracking()
-                            .Where(d => d.RouteId == request.Id)
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .Include(p => p.UpstreamHttpMethod)
-                            .Include(p => p.AuthenticationOptions)
-                            .ThenInclude(option => option.AllowedScopes)
-                            .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
-                            .SingleOrDefaultAsync(cancellationToken)
-                    };
+                    Dto = await _context.Routes.AsNoTracking()
+                        .Where(d => d.RouteId == request.Id)
+                        .Include(p => p.LoadBalancerOptions)
+                        .Include(p => p.DownstreamHostAndPorts)
+                        .Include(p => p.UpstreamHttpMethod)
+                        .Include(p => p.AuthenticationOptions)
+                        .ThenInclude(option => option.AllowedScopes)
+                        .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
+                        .SingleOrDefaultAsync(cancellationToken)
+                };
 
-                    if (vm.Dto == null)
-                        throw new NotFoundException(nameof(Route), request.Id);
+                if (vm.Dto == null)
+                    throw new NotFoundException(nameof(Route), request.Id);
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new RouteDetailViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }

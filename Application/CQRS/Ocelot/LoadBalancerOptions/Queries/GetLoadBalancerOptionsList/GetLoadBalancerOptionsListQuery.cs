@@ -25,22 +25,14 @@ namespace Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOpt
             public async Task<LoadBalancerOptionsListViewModel> Handle(GetLoadBalancerOptionsListQuery request,
                 CancellationToken cancellationToken)
             {
-                try
+                var vm = new LoadBalancerOptionsListViewModel
                 {
-                    var vm = new LoadBalancerOptionsListViewModel
-                    {
-                        ListDtos = await _context.LoadBalancerOptions.AsNoTracking()
-                            .ProjectTo<LoadBalancerOptionsListDto>(_mapper.ConfigurationProvider)
-                            .ToListAsync(cancellationToken)
-                    };
+                    ListDtos = await _context.LoadBalancerOptions.AsNoTracking()
+                        .ProjectTo<LoadBalancerOptionsListDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync(cancellationToken)
+                };
 
-                    return vm;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return new LoadBalancerOptionsListViewModel {Success = false, Message = e.Message};
-                }
+                return vm;
             }
         }
     }
