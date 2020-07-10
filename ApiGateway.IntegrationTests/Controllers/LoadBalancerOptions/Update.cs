@@ -5,7 +5,7 @@ using ApiGateway.IntegrationTests.Common;
 using Domain.Entities.Routes;
 using Xunit;
 
-namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
+namespace ApiGateway.IntegrationTests.Controllers.LoadBalancerOptions
 {
     public class Update : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -17,30 +17,30 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
         }
 
         [Fact]
-        public async Task UpdateAuthenticationOption_ReturnSuccessStatusCode()
+        public async Task UpdateLoadBalancerOption_ReturnSuccessStatusCode()
         {
             //Arrange 
-            var newUnit = new AuthenticationOption {AuthenticationProviderKey = "Test10", AuthenticationOptionId = 10};
+            var newUnit = new LoadBalancerOption {Type = "Test10", LoadBalancerOptionId = 10};
             var content = Utilities.GetRequestContent(newUnit);
 
             //Act
             var response =
-                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.AuthenticationOptions), content);
+                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.LoadBalancerOptions), content);
 
             //Assert
             response.EnsureSuccessStatusCode();
         }
         
         [Fact]
-        public async Task UpdateAuthenticationOption_ReturnsNotFoundStatusCode()
+        public async Task UpdateLoadBalancerOption_ReturnsNotFoundStatusCode()
         {
             //Arrange 
-            var newUnit = new AuthenticationOption {AuthenticationProviderKey = "Test10", AuthenticationOptionId = 80};
+            var newUnit = new LoadBalancerOption {Type = "Test10", LoadBalancerOptionId = 80};
             var content = Utilities.GetRequestContent(newUnit);
 
             //Act
             var response =
-                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.AuthenticationOptions), content);
+                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.LoadBalancerOptions), content);
 
             //Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

@@ -2,10 +2,10 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
-using Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOption;
+using Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOption;
 using Xunit;
 
-namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
+namespace ApiGateway.IntegrationTests.Controllers.LoadBalancerOptions
 {
     public class Get : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -17,17 +17,17 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
         }
 
         [Fact]
-        public async Task GivenId_ReturnsAuthenticationOptionViewModel()
+        public async Task GivenId_ReturnsLoadBalancerOptionViewModel()
         {
             var id = 10;
 
-            var response = await _client.GetAsync(UriForTests.GetUri(ControllerNames.AuthenticationOptions, id));
+            var response = await _client.GetAsync(UriForTests.GetUri(ControllerNames.LoadBalancerOptions, id));
 
             response.EnsureSuccessStatusCode();
 
-            var vm = await Utilities.GetResponseContent<AuthenticationOptionDetailViewModel>(response);
+            var vm = await Utilities.GetResponseContent<LoadBalancerOptionDetailViewModel>(response);
 
-            Assert.Equal(id, vm.Dto.AuthenticationOptionId);
+            Assert.Equal(id, vm.Dto.LoadBalancerOptionId);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
         {
             var invalidId = 100;
 
-            var response = await _client.GetAsync(UriForTests.GetUri(ControllerNames.AuthenticationOptions, invalidId));
+            var response = await _client.GetAsync(UriForTests.GetUri(ControllerNames.LoadBalancerOptions, invalidId));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

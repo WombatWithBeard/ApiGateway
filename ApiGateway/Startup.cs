@@ -1,3 +1,4 @@
+using ApiGateway.Common;
 using Application.Tools;
 using Infrastructure.Tools;
 using Microsoft.AspNetCore.Builder;
@@ -65,8 +66,9 @@ namespace ApiGateway
             //     await context.Database.EnsureCreatedAsync();
             //     // await context.Database.MigrateAsync();
             // }
-            
 
+            app.UseCustomExceptionHandler();
+            
             app.UseHealthChecks("/health");
 
             app.UseOpenApi();

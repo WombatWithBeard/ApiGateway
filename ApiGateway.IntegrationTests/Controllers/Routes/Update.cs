@@ -5,7 +5,7 @@ using ApiGateway.IntegrationTests.Common;
 using Domain.Entities.Routes;
 using Xunit;
 
-namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
+namespace ApiGateway.IntegrationTests.Controllers.Routes
 {
     public class Update : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -17,30 +17,30 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
         }
 
         [Fact]
-        public async Task UpdateAuthenticationOption_ReturnSuccessStatusCode()
+        public async Task UpdateRoute_ReturnSuccessStatusCode()
         {
             //Arrange 
-            var newUnit = new AuthenticationOption {AuthenticationProviderKey = "Test10", AuthenticationOptionId = 10};
+            var newUnit = new Route {DownstreamScheme = "Test10", RouteId = 10};
             var content = Utilities.GetRequestContent(newUnit);
 
             //Act
             var response =
-                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.AuthenticationOptions), content);
+                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.Routes), content);
 
             //Assert
             response.EnsureSuccessStatusCode();
         }
         
         [Fact]
-        public async Task UpdateAuthenticationOption_ReturnsNotFoundStatusCode()
+        public async Task UpdateRoute_ReturnsNotFoundStatusCode()
         {
             //Arrange 
-            var newUnit = new AuthenticationOption {AuthenticationProviderKey = "Test10", AuthenticationOptionId = 80};
+            var newUnit = new Route {DownstreamScheme = "Test10", RouteId = 80};
             var content = Utilities.GetRequestContent(newUnit);
 
             //Act
             var response =
-                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.AuthenticationOptions), content);
+                await _client.PutAsync(UriForTests.UpdateUri(ControllerNames.Routes), content);
 
             //Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

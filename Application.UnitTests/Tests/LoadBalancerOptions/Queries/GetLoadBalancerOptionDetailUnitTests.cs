@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
-using Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPort;
 using Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOption;
 using Application.UnitTests.Common;
 using Xunit;

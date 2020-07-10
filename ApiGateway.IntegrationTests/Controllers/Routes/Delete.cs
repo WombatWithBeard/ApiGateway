@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Xunit;
 
-namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
+namespace ApiGateway.IntegrationTests.Controllers.Routes
 {
     public class Delete : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -21,7 +21,7 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
             var validId = 15;
 
             var response =
-                await _client.DeleteAsync(UriForTests.DeleteUri(ControllerNames.AuthenticationOptions, validId));
+                await _client.DeleteAsync(UriForTests.DeleteUri(ControllerNames.Routes, validId));
 
             response.EnsureSuccessStatusCode();
         }
@@ -32,7 +32,7 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
             var invalidId = 50;
 
             var response =
-                await _client.DeleteAsync(UriForTests.DeleteUri(ControllerNames.AuthenticationOptions, invalidId));
+                await _client.DeleteAsync(UriForTests.DeleteUri(ControllerNames.Routes, invalidId));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

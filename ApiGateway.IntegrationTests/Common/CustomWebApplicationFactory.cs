@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Application.Common.Interfaces;
 using Infrastructure.Tools;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -25,18 +26,19 @@ namespace ApiGateway.IntegrationTests.Common
                     optionsBuilder.UseInMemoryDatabase("InMemoryDb");
                 });
 
+                services.AddScoped<IApiGatewayDbContext>(provider => provider.GetService<ApiGatewayDbContext>());
+
                 var sp = services.BuildServiceProvider();
 
                 using var scope = sp.CreateScope();
-                var db = scope.ServiceProvider.GetRequiredService<ApiGatewayDbContext>();
-                var logger = scope.ServiceProvider
-                    .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                var context = scope.ServiceProvider.GetRequiredService<ApiGatewayDbContext>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
-                db.Database.EnsureCreated();
+                context.Database.EnsureCreated();
 
                 try
                 {
-                    Utilities.InitializeDbForTests(db);
+                    Utilities.InitializeDbForTests(context);
                 }
                 catch (Exception e)
                 {

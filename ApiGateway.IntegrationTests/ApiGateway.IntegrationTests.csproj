@@ -16,13 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\DownstreamHostAndPorts" />
-      <Folder Include="Controllers\GlobalConfigurations" />
-      <Folder Include="Controllers\LoadBalancerOptions" />
-      <Folder Include="Controllers\Routes" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\ApiGateway\ApiGateway.csproj" />
       <ProjectReference Include="..\EntitySeedData\EntitySeedData.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

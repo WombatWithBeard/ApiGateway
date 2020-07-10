@@ -4,7 +4,7 @@ using ApiGateway.IntegrationTests.Common;
 using Domain.Entities.Routes;
 using Xunit;
 
-namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
+namespace ApiGateway.IntegrationTests.Controllers.GlobalConfigurations
 {
     public class Create : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -16,15 +16,15 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
         }
 
         [Fact]
-        public async Task CreateAuthenticationOption_ReturnSuccessStatusCode()
+        public async Task CreateGlobalConfiguration_ReturnSuccessStatusCode()
         {
             //Arrange 
-            var newUnit = new AuthenticationOption {AuthenticationProviderKey = "Test"};
+            var newUnit = new GlobalConfiguration {BaseUrl = "Test"};
             var content = Utilities.GetRequestContent(newUnit);
 
             //Act
             var response =
-                await _client.PostAsync(UriForTests.CreateUri(ControllerNames.AuthenticationOptions), content);
+                await _client.PostAsync(UriForTests.CreateUri(ControllerNames.GlobalConfigurations), content);
 
             //Assert
             response.EnsureSuccessStatusCode();
