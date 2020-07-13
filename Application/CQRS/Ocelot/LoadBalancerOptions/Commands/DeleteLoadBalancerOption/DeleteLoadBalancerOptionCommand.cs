@@ -31,9 +31,7 @@ namespace Application.CQRS.Ocelot.LoadBalancerOptions.Commands.DeleteLoadBalance
                     var entity = await _context.LoadBalancerOptions.FindAsync(request.Id);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(LoadBalancerOption), request.Id);
-                    }
 
                     _context.LoadBalancerOptions.Remove(entity);
 

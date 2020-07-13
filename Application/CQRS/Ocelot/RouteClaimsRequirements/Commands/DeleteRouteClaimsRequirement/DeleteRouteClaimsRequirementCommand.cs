@@ -7,13 +7,13 @@ using Domain.Entities.Routes;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.CQRS.Ocelot.Routes.Commands.DeleteRoute
+namespace Application.CQRS.Ocelot.RouteClaimsRequirements.Commands.DeleteRouteClaimsRequirement
 {
-    public class DeleteRouteCommand : IRequest
+    public class DeleteRouteClaimsRequirementCommand : IRequest
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<DeleteRouteCommand>
+        public class Handler : IRequestHandler<DeleteRouteClaimsRequirementCommand>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly ILogger<Handler> _logger;
@@ -24,16 +24,17 @@ namespace Application.CQRS.Ocelot.Routes.Commands.DeleteRoute
                 _logger = logger;
             }
 
-            public async Task<Unit> Handle(DeleteRouteCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteRouteClaimsRequirementCommand request,
+                CancellationToken cancellationToken)
             {
                 try
                 {
-                    var entity = await _context.Routes.FindAsync(request.Id);
+                    var entity = await _context.RouteClaimsRequirements.FindAsync(request.Id);
 
                     if (entity == null)
-                        throw new NotFoundException(nameof(Route), request.Id);
+                        throw new NotFoundException(nameof(RouteClaimsRequirement), request.Id);
 
-                    _context.Routes.Remove(entity);
+                    _context.RouteClaimsRequirements.Remove(entity);
 
                     await _context.SaveChangesAsync(cancellationToken);
 

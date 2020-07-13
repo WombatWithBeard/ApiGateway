@@ -12,6 +12,7 @@ namespace Application.Common.Interfaces
         DbSet<AuthenticationOption> AuthenticationOptions { get; set; }
         DbSet<DownstreamHostAndPort> DownstreamHostAndPorts { get; set; }
         DbSet<GlobalConfiguration> GlobalConfigurations { get; set; }
+        DbSet<RouteClaimsRequirement> RouteClaimsRequirements { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

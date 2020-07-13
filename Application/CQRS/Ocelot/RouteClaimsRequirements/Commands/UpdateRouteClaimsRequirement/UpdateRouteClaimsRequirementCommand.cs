@@ -8,11 +8,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Commands.UpdateDownstreamHostAndPort
+namespace Application.CQRS.Ocelot.RouteClaimsRequirements.Commands.UpdateRouteClaimsRequirement
 {
-    public class UpdateDownstreamHostAndPortCommand : BaseDownstreamHostAndPortDto, IRequest
+    public class UpdateRouteClaimsRequirementCommand : BaseRouteClaimsRequirementDto, IRequest
     {
-        public class Handler : IRequestHandler<UpdateDownstreamHostAndPortCommand>
+        public class Handler : IRequestHandler<UpdateRouteClaimsRequirementCommand>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly ILogger<Handler> _logger;
@@ -23,20 +23,20 @@ namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Commands.UpdateDownstre
                 _logger = logger;
             }
 
-            public async Task<Unit> Handle(UpdateDownstreamHostAndPortCommand request,
+            public async Task<Unit> Handle(UpdateRouteClaimsRequirementCommand request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
                     var entity =
-                        await _context.DownstreamHostAndPorts.SingleOrDefaultAsync(
-                            r => r.DownstreamHostAndPortId == request.DownstreamHostAndPortId, cancellationToken);
+                        await _context.RouteClaimsRequirements.SingleOrDefaultAsync(
+                            r => r.RouteClaimsRequirementId == request.RouteClaimsRequirementId, cancellationToken);
 
                     if (entity == null)
-                        throw new NotFoundException(nameof(DownstreamHostAndPort), request.DownstreamHostAndPortId);
+                        throw new NotFoundException(nameof(RouteClaimsRequirement), request.RouteClaimsRequirementId);
 
-                    entity.Host = request.Host;
-                    entity.Port = request.Port;
+                    entity.RouteClaimsRequirementId = request.RouteClaimsRequirementId;
+                    entity.Role = request.Role;
                     entity.RouteId = request.RouteId;
 
                     await _context.SaveChangesAsync(cancellationToken);

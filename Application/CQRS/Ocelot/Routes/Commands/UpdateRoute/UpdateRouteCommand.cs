@@ -32,9 +32,7 @@ namespace Application.CQRS.Ocelot.Routes.Commands.UpdateRoute
                             cancellationToken);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(Route), request.RouteId);
-                    }
 
                     entity.Enabled = request.Enabled;
                     entity.DownstreamScheme = request.DownstreamScheme;

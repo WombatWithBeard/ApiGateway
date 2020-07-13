@@ -32,9 +32,7 @@ namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Commands.DeleteDownstre
                     var entity = await _context.DownstreamHostAndPorts.FindAsync(request.Id);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(DownstreamHostAndPort), request.Id);
-                    }
 
                     _context.DownstreamHostAndPorts.Remove(entity);
 

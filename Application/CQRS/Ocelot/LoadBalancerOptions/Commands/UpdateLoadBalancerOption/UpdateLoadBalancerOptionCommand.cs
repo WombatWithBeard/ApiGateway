@@ -32,9 +32,7 @@ namespace Application.CQRS.Ocelot.LoadBalancerOptions.Commands.UpdateLoadBalance
                             r => r.LoadBalancerOptionId == request.LoadBalancerOptionId, cancellationToken);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(LoadBalancerOption), request.LoadBalancerOptionId);
-                    }
 
                     entity.Type = request.Type;
                     entity.RouteId = request.RouteId;

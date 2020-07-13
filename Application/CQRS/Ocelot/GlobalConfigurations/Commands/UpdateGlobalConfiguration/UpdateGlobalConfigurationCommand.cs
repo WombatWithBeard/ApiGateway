@@ -33,9 +33,7 @@ namespace Application.CQRS.Ocelot.GlobalConfigurations.Commands.UpdateGlobalConf
                             r => r.GlobalConfigurationId == request.GlobalConfigurationId, cancellationToken);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(GlobalConfiguration), request.GlobalConfigurationId);
-                    }
 
                     entity.BaseUrl = request.BaseUrl;
 

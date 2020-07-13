@@ -32,9 +32,7 @@ namespace Application.CQRS.Ocelot.GlobalConfigurations.Commands.DeleteGlobalConf
                     var entity = await _context.GlobalConfigurations.FindAsync(request.Id);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(GlobalConfiguration), request.Id);
-                    }
 
                     _context.GlobalConfigurations.Remove(entity);
 

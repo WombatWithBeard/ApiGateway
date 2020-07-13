@@ -32,9 +32,7 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Commands.DeleteAuthentic
                     var entity = await _context.AuthenticationOptions.FindAsync(request.Id);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(AuthenticationOption), request.Id);
-                    }
 
                     _context.AuthenticationOptions.Remove(entity);
 

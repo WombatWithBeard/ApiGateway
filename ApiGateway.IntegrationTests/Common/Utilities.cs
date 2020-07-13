@@ -22,7 +22,7 @@ namespace ApiGateway.IntegrationTests.Common
 
             return result;
         }
-        
+
         public static void InitializeDbForTests(ApiGatewayDbContext context)
         {
             context.Routes.AddRange(new SeedRoutes().Seed());
@@ -30,6 +30,7 @@ namespace ApiGateway.IntegrationTests.Common
             context.GlobalConfigurations.AddRange(new SeedGlobalConfigurations().Seed());
             context.LoadBalancerOptions.AddRange(new SeedLoadBalancerOptions().Seed());
             context.DownstreamHostAndPorts.AddRange(new SeedDownstreamHostAndPorts().Seed());
+            context.RouteClaimsRequirements.AddRange(new SeedRouteClaimsRequirements().Seed());
 
             context.SaveChanges();
         }

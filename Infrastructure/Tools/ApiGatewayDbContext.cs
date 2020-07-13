@@ -11,6 +11,7 @@ namespace Infrastructure.Tools
         public DbSet<AuthenticationOption> AuthenticationOptions { get; set; }
         public DbSet<DownstreamHostAndPort> DownstreamHostAndPorts { get; set; }
         public DbSet<GlobalConfiguration> GlobalConfigurations { get; set; }
+        public DbSet<RouteClaimsRequirement> RouteClaimsRequirements { get; set; }
 
         public ApiGatewayDbContext(DbContextOptions<ApiGatewayDbContext> options) : base(options)
         {

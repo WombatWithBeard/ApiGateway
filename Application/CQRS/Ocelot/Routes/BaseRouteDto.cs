@@ -22,6 +22,7 @@ namespace Application.CQRS.Ocelot.Routes
         public ICollection<UpstreamHttpsMethod> UpstreamHttpMethod { get; set; }
         public AuthenticationOption AuthenticationOptions { get; set; }
         public LoadBalancerOption LoadBalancerOptions { get; set; }
+        public RouteClaimsRequirement RouteClaimsRequirement { get; set; }
         public int Priority { get; set; }
     }
 }

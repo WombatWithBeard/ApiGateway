@@ -2,6 +2,7 @@
 
 namespace Domain.Entities.Common
 {
+    //TODO: need to make auto getting from the authDB
     public class Scope
     {
         [JsonIgnore] public int ScopeId { get; set; }

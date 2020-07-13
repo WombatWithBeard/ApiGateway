@@ -11,13 +11,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
+namespace Application.CQRS.Ocelot.RouteClaimsRequirements.Queries.GetRouteClaimsRequirement
 {
-    public class GetRouteDetailQuery : IRequest<RouteDetailViewModel>
+    public class GetRouteClaimsRequirementDetailQuery : IRequest<RouteClaimsRequirementDetailViewModel>
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetRouteDetailQuery, RouteDetailViewModel>
+        public class Handler : IRequestHandler<GetRouteClaimsRequirementDetailQuery,
+            RouteClaimsRequirementDetailViewModel>
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -30,27 +31,22 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoute
                 _logger = logger;
             }
 
-            public async Task<RouteDetailViewModel> Handle(GetRouteDetailQuery request,
+            public async Task<RouteClaimsRequirementDetailViewModel> Handle(
+                GetRouteClaimsRequirementDetailQuery request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
-                    var vm = new RouteDetailViewModel
+                    var vm = new RouteClaimsRequirementDetailViewModel
                     {
-                        Dto = await _context.Routes.AsNoTracking()
-                            .Where(d => d.RouteId == request.Id)
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .Include(p => p.UpstreamHttpMethod)
-                            .Include(p => p.RouteClaimsRequirement)
-                            .Include(p => p.AuthenticationOptions)
-                            .ThenInclude(option => option.AllowedScopes)
-                            .ProjectTo<RouteDetailDto>(_mapper.ConfigurationProvider)
+                        Dto = await _context.RouteClaimsRequirements.AsNoTracking()
+                            .Where(d => d.RouteClaimsRequirementId == request.Id)
+                            .ProjectTo<RouteClaimsRequirementDetailDto>(_mapper.ConfigurationProvider)
                             .SingleOrDefaultAsync(cancellationToken)
                     };
 
                     if (vm.Dto == null)
-                        throw new NotFoundException(nameof(Route), request.Id);
+                        throw new NotFoundException(nameof(RouteClaimsRequirement), request.Id);
 
                     return vm;
                 }

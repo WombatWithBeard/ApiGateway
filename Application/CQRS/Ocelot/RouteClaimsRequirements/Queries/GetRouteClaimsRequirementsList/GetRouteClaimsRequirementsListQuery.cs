@@ -8,11 +8,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
+namespace Application.CQRS.Ocelot.RouteClaimsRequirements.Queries.GetRouteClaimsRequirementsList
 {
-    public class GetRoutesListQuery : IRequest<RoutesListViewModel>
+    public class GetRouteClaimsRequirementsListQuery : IRequest<RouteClaimsRequirementsListViewModel>
     {
-        public class Handler : IRequestHandler<GetRoutesListQuery, RoutesListViewModel>
+        public class Handler : IRequestHandler<GetRouteClaimsRequirementsListQuery, RouteClaimsRequirementsListViewModel
+        >
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
@@ -25,21 +26,15 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
                 _logger = logger;
             }
 
-            public async Task<RoutesListViewModel> Handle(GetRoutesListQuery request,
+            public async Task<RouteClaimsRequirementsListViewModel> Handle(GetRouteClaimsRequirementsListQuery request,
                 CancellationToken cancellationToken)
             {
                 try
                 {
-                    var vm = new RoutesListViewModel
+                    var vm = new RouteClaimsRequirementsListViewModel
                     {
-                        ListDtos = await _context.Routes.AsNoTracking()
-                            .Include(p => p.LoadBalancerOptions)
-                            .Include(p => p.DownstreamHostAndPorts)
-                            .Include(p => p.UpstreamHttpMethod)
-                            .Include(p => p.RouteClaimsRequirement)
-                            .Include(p => p.AuthenticationOptions)
-                            .ThenInclude(option => option.AllowedScopes)
-                            .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
+                        ListDtos = await _context.RouteClaimsRequirements.AsNoTracking()
+                            .ProjectTo<RouteClaimsRequirementsListDto>(_mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken)
                     };
 

@@ -33,9 +33,7 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Commands.UpdateAuthentic
                             r => r.AuthenticationOptionId == request.AuthenticationOptionId, cancellationToken);
 
                     if (entity == null)
-                    {
                         throw new NotFoundException(nameof(AuthenticationOption), request.AuthenticationOptionId);
-                    }
 
                     entity.AllowedScopes = request.AllowedScopes;
                     entity.AuthenticationProviderKey = request.AuthenticationProviderKey;

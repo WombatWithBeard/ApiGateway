@@ -22,6 +22,7 @@ namespace Application.UnitTests.Common
             context.GlobalConfigurations.AddRange(new SeedGlobalConfigurations().Seed());
             context.LoadBalancerOptions.AddRange(new SeedLoadBalancerOptions().Seed());
             context.DownstreamHostAndPorts.AddRange(new SeedDownstreamHostAndPorts().Seed());
+            context.RouteClaimsRequirements.AddRange(new SeedRouteClaimsRequirements().Seed());
 
             context.SaveChanges();
 

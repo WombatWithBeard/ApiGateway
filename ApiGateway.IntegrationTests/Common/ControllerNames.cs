@@ -7,5 +7,6 @@
         public const string GlobalConfigurations = "GlobalConfigurations";
         public const string DownstreamHostAndPorts = "DownstreamHostAndPorts";
         public const string AuthenticationOptions = "AuthenticationOptions";
+        public const string RouteClaimsRequirements = "RouteClaimsRequirements";
     }
 }
