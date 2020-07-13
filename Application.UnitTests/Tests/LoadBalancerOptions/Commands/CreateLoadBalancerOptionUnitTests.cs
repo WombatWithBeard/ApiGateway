@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.LoadBalancerOptions.Commands.CreateLoadBalancerOption;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.LoadBalancerOptions.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.LoadBalancerOptions.Commands
 
         public CreateLoadBalancerOptionUnitTests()
         {
-            _handler = new CreateLoadBalancerOptionCommand.Handler(Context, Mapper);
+            _handler = new CreateLoadBalancerOptionCommand.Handler(Context, Mapper, NullLogger<CreateLoadBalancerOptionCommand.Handler>.Instance);
         }
 
         [Fact]

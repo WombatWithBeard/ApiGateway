@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.AuthenticationOptions.Queries.GetAuthenticationOptionsList;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.AuthenticationOptions.Queries
@@ -12,7 +13,8 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Queries
 
         public GetAuthenticationOptionsListUnitTests()
         {
-            _handler = new GetAuthenticationOptionsListQuery.Handler(Context, Mapper);
+            _handler = new GetAuthenticationOptionsListQuery.Handler(Context, Mapper,
+                NullLogger<GetAuthenticationOptionsListQuery.Handler>.Instance);
         }
 
         [Fact]

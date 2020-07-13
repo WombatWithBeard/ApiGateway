@@ -16,7 +16,7 @@ namespace Infrastructure.Tools
                     b =>
                     {
                         b.MigrationsAssembly("ApiGateway");
-                        b.SetPostgresVersion(9,6);
+                        b.SetPostgresVersion(9, 6);
                     }));
 
             service.AddScoped<IApiGatewayDbContext>(provider => provider.GetService<ApiGatewayDbContext>());

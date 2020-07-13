@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.Routes.Queries.GetRoutesList;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.Routes.Queries
@@ -12,7 +14,7 @@ namespace Application.UnitTests.Tests.Routes.Queries
 
         public GetRoutesListUnitTests()
         {
-            _handler = new GetRoutesListQuery.Handler(Context, Mapper);
+            _handler = new GetRoutesListQuery.Handler(Context, Mapper, NullLogger<GetRoutesListQuery.Handler>.Instance);
         }
 
         [Fact]

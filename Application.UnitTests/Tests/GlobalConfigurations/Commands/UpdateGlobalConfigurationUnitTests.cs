@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.GlobalConfigurations.Commands.UpdateGlobalConfiguration;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
 
         public UpdateGlobalConfigurationUnitTests()
         {
-            _handler = new UpdateGlobalConfigurationCommand.Handler(Context);
+            _handler = new UpdateGlobalConfigurationCommand.Handler(Context, NullLogger<UpdateGlobalConfigurationCommand.Handler>.Instance);
         }
 
         [Fact]

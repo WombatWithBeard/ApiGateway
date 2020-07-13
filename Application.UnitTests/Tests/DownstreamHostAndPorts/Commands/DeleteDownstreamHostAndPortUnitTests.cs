@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.DownstreamHostAndPorts.Commands.DeleteDownstreamHostAndPort;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Commands
 
         public DeleteDownstreamHostAndPortUnitTests()
         {
-            _handler = new DeleteDownstreamHostAndPortCommand.Handler(Context);
+            _handler = new DeleteDownstreamHostAndPortCommand.Handler(Context, NullLogger<DeleteDownstreamHostAndPortCommand.Handler>.Instance);
         }
 
         [Fact]

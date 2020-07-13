@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.GlobalConfigurations.Commands.DeleteGlobalConfiguration;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
 
         public DeleteGlobalConfigurationUnitTests()
         {
-            _handler = new DeleteGlobalConfigurationCommand.Handler(Context);
+            _handler = new DeleteGlobalConfigurationCommand.Handler(Context, NullLogger<DeleteGlobalConfigurationCommand.Handler>.Instance);
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.AuthenticationOptions.Commands.UpdateAuthenticationOption;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
@@ -13,7 +14,8 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
 
         public UpdateAuthenticationOptionUnitTests()
         {
-            _handler = new UpdateAuthenticationOptionCommand.Handler(Context);
+            _handler = new UpdateAuthenticationOptionCommand.Handler(Context,
+                NullLogger<UpdateAuthenticationOptionCommand.Handler>.Instance);
         }
 
         [Fact]
@@ -31,8 +33,8 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
             Assert.NotNull(unit);
             Assert.Equal(updatedId, unit.AuthenticationOptionId);
             Assert.Equal(30, unit.RouteId);
-        }        
-        
+        }
+
         [Fact]
         public async Task Handle_GivenNotFoundException()
         {

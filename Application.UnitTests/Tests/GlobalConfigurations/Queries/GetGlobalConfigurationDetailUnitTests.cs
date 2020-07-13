@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfiguration;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.GlobalConfigurations.Queries
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.GlobalConfigurations.Queries
 
         public GetGlobalConfigurationDetailUnitTests()
         {
-            _handler = new GetGlobalConfigurationDetailQuery.Handler(Context, Mapper);
+            _handler = new GetGlobalConfigurationDetailQuery.Handler(Context, Mapper, NullLogger<GetGlobalConfigurationDetailQuery.Handler>.Instance);
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.Routes.Commands.CreateRoute;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.Routes.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.Routes.Commands
 
         public CreateRouteUnitTests()
         {
-            _handler = new CreateRouteCommand.Handler(Context, Mapper);
+            _handler = new CreateRouteCommand.Handler(Context, Mapper, NullLogger<CreateRouteCommand.Handler>.Instance);
         }
 
         [Fact]

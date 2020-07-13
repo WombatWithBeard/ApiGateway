@@ -24,9 +24,9 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInfrastructure(Configuration);
-            
+
             services.AddApplication(Configuration);
-            
+
             const string authenticationProviderKey = "TestKey"; //need to take away from this place
 
             services.AddAuthentication()
@@ -37,19 +37,19 @@ namespace ApiGateway
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidAudiences = new [] {"ApiOne", "ApiTwo"} //need to take it from db
+                        ValidAudiences = new[] {"ApiOne", "ApiTwo"} //need to take it from db
                     };
                 });
 
             services.AddHttpContextAccessor();
-            
+
             services.AddControllers();
-            
-            services.AddOcelot(Configuration);
 
             services.AddHealthChecks();
-            
+
             services.AddOpenApiDocument(config => { config.Title = "Sir API gateway service"; });
+            
+            services.AddOcelot(Configuration);
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -68,7 +68,7 @@ namespace ApiGateway
             // }
 
             app.UseCustomExceptionHandler();
-            
+
             app.UseHealthChecks("/health");
 
             app.UseOpenApi();

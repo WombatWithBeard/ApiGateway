@@ -7,7 +7,6 @@ using Application.CQRS.Ocelot.Routes.Queries.GetRoute;
 using Application.CQRS.Ocelot.Routes.Queries.GetRoutesList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ApiGateway.Controllers.Ocelot
 {

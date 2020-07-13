@@ -1,10 +1,12 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Common.Mapping;
 using AutoMapper;
 using Domain.Entities.Routes;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.CQRS.Ocelot.AuthenticationOptions.Commands.CreateAuthenticationOption
 {
@@ -15,23 +17,33 @@ namespace Application.CQRS.Ocelot.AuthenticationOptions.Commands.CreateAuthentic
         {
             private readonly IApiGatewayDbContext _context;
             private readonly IMapper _mapper;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(IApiGatewayDbContext context, IMapper mapper)
+            public Handler(IApiGatewayDbContext context, IMapper mapper, ILogger<Handler> logger)
             {
                 _context = context;
                 _mapper = mapper;
+                _logger = logger;
             }
 
             public async Task<Unit> Handle(CreateAuthenticationOptionCommand request,
                 CancellationToken cancellationToken)
             {
-                var entity = _mapper.Map<AuthenticationOption>(request);
+                try
+                {
+                    var entity = _mapper.Map<AuthenticationOption>(request);
 
-                await _context.AuthenticationOptions.AddAsync(entity, cancellationToken);
+                    await _context.AuthenticationOptions.AddAsync(entity, cancellationToken);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                    await _context.SaveChangesAsync(cancellationToken);
 
-                return Unit.Value;
+                    return Unit.Value;
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message);
+                    throw;
+                }
             }
         }
 

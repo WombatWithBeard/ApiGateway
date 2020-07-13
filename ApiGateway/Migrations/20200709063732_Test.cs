@@ -15,10 +15,7 @@ namespace ApiGateway.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     BaseUrl = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GlobalConfigurations", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_GlobalConfigurations", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Routes",
@@ -32,10 +29,7 @@ namespace ApiGateway.Migrations
                     UpstreamPathTemplate = table.Column<string>(nullable: true),
                     Priority = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Routes", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Routes", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "AuthenticationOptions",
@@ -141,66 +135,67 @@ namespace ApiGateway.Migrations
 
             migrationBuilder.InsertData(
                 table: "GlobalConfigurations",
-                columns: new[] { "Id", "BaseUrl" },
-                values: new object[] { 1, "https://localhost:6900" });
+                columns: new[] {"Id", "BaseUrl"},
+                values: new object[] {1, "https://localhost:6900"});
 
             migrationBuilder.InsertData(
                 table: "Routes",
-                columns: new[] { "Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "Priority", "UpstreamPathTemplate" },
+                columns: new[]
+                    {"Id", "DownstreamPathTemplate", "DownstreamScheme", "Enabled", "Priority", "UpstreamPathTemplate"},
                 values: new object[,]
                 {
-                    { 1, "/{url}", "https", true, 0, "/ServiceOne/{url}" },
-                    { 2, "/{url}", "https", true, 0, "/ServiceTwo/{url}" }
+                    {1, "/{url}", "https", true, 0, "/ServiceOne/{url}"},
+                    {2, "/{url}", "https", true, 0, "/ServiceTwo/{url}"}
                 });
 
             migrationBuilder.InsertData(
                 table: "AuthenticationOptions",
-                columns: new[] { "Id", "AuthenticationProviderKey", "RouteId" },
+                columns: new[] {"Id", "AuthenticationProviderKey", "RouteId"},
                 values: new object[,]
                 {
-                    { 1, "TestKey", 1 },
-                    { 2, "TestKey", 2 }
+                    {1, "TestKey", 1},
+                    {2, "TestKey", 2}
                 });
 
             migrationBuilder.InsertData(
                 table: "DownstreamHostAndPorts",
-                columns: new[] { "Id", "Host", "Port", "RouteId" },
+                columns: new[] {"Id", "Host", "Port", "RouteId"},
                 values: new object[,]
                 {
-                    { 1, "localhost", 3001, 1 },
-                    { 2, "localhost", 3010, 1 },
-                    { 3, "localhost", 4003, 2 }
+                    {1, "localhost", 3001, 1},
+                    {2, "localhost", 3010, 1},
+                    {3, "localhost", 4003, 2}
                 });
 
             migrationBuilder.InsertData(
                 table: "LoadBalancerOptions",
-                columns: new[] { "Id", "RouteId", "Type" },
+                columns: new[] {"Id", "RouteId", "Type"},
                 values: new object[,]
                 {
-                    { 1, 1, "RoundRobin" },
-                    { 2, 2, "RoundRobin" }
+                    {1, 1, "RoundRobin"},
+                    {2, 2, "RoundRobin"}
                 });
 
             migrationBuilder.InsertData(
                 table: "UpstreamHttpsMethods",
-                columns: new[] { "Id", "Name", "RouteId" },
+                columns: new[] {"Id", "Name", "RouteId"},
                 values: new object[,]
                 {
-                    { 1, "Get", 1 },
-                    { 2, "Post", 1 },
-                    { 3, "Put", 1 },
-                    { 4, "Delete", 1 },
-                    { 5, "Get", 2 }
+                    {1, "Get", 1},
+                    {2, "Post", 1},
+                    {3, "Put", 1},
+                    {4, "Delete", 1},
+                    {5, "Get", 2}
                 });
 
             migrationBuilder.InsertData(
                 table: "Scopes",
-                columns: new[] { "Id", "AuthenticationOptionId", "ExternalId", "ScopeName" },
+                columns: new[] {"Id", "AuthenticationOptionId", "ExternalId", "ScopeName"},
                 values: new object[,]
                 {
-                    { 1, 1, 1, "ApiOne" },
-                    { 2, 1, 2, "ApiTwo" },
-                    { 3, 2, 1, "ApiOne" }
+                    {1, 1, 1, "ApiOne"},
+                    {2, 1, 2, "ApiTwo"},
+                    {3, 2, 1, "ApiOne"}
                 });
 
             migrationBuilder.CreateIndex(

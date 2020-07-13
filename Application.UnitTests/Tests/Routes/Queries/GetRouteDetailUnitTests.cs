@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.Routes.Queries.GetRoute;
 using Application.UnitTests.Common;
+using Castle.Core.Logging;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.Routes.Queries
@@ -13,7 +16,7 @@ namespace Application.UnitTests.Tests.Routes.Queries
 
         public GetRouteDetailUnitTests()
         {
-            _handler = new GetRouteDetailQuery.Handler(Context, Mapper);
+            _handler = new GetRouteDetailQuery.Handler(Context, Mapper, NullLogger<GetRouteDetailQuery.Handler>.Instance);
         }
 
         [Fact]

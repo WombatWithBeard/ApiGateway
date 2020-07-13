@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.Routes.Commands.UpdateRoute;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.Routes.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.Routes.Commands
 
         public UpdateRouteUnitTests()
         {
-            _handler = new UpdateRouteCommand.Handler(Context);
+            _handler = new UpdateRouteCommand.Handler(Context, NullLogger<UpdateRouteCommand.Handler>.Instance);
         }
 
         [Fact]

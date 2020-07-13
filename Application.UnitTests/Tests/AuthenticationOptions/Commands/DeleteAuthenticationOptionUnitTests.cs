@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.AuthenticationOptions.Commands.DeleteAuthenticationOption;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
@@ -13,7 +14,8 @@ namespace Application.UnitTests.Tests.AuthenticationOptions.Commands
 
         public DeleteAuthenticationOptionUnitTests()
         {
-            _handler = new DeleteAuthenticationOptionCommand.Handler(Context);
+            _handler = new DeleteAuthenticationOptionCommand.Handler(Context,
+                NullLogger<DeleteAuthenticationOptionCommand.Handler>.Instance);
         }
 
         [Fact]

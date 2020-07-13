@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.Routes.Commands.DeleteRoute;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.Routes.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.Routes.Commands
 
         public DeleteRouteUnitTests()
         {
-            _handler = new DeleteRouteCommand.Handler(Context);
+            _handler = new DeleteRouteCommand.Handler(Context, NullLogger<DeleteRouteCommand.Handler>.Instance);
         }
 
         [Fact]
