@@ -4,7 +4,7 @@ using Domain.Entities.Routes;
 
 namespace Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPortsList
 {
-    public class DownstreamHostAndPortsListDto: BaseDownstreamHostAndPortDto, IMapFrom<DownstreamHostAndPort>
+    public class DownstreamHostAndPortsListDto : BaseDownstreamHostAndPortDto, IMapFrom<DownstreamHostAndPort>
     {
         public void Mapping(Profile profile)
         {

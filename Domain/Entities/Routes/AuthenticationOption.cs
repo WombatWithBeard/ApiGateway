@@ -14,7 +14,7 @@ namespace Domain.Entities.Routes
         [JsonIgnore] public int AuthenticationOptionId { get; set; }
         public string AuthenticationProviderKey { get; set; }
         public ICollection<Scope> AllowedScopes { get; set; }
-        
+
         [JsonIgnore] public int RouteId { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Application.UnitTests.Tests.GlobalConfigurations.Queries
 
         public GetGlobalConfigurationsListUnitTests()
         {
-            _handler = new GetGlobalConfigurationsListQuery.Handler(Context, Mapper);
+            _handler = new GetGlobalConfigurationsListQuery.Handler(Context, Mapper, null);
         }
 
         [Fact]

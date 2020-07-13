@@ -2,6 +2,9 @@
 using Application.Common.Mapping;
 using AutoMapper;
 using Infrastructure.Tools;
+using Microsoft.Extensions.Logging;
+using Moq;
+using ILogger = Castle.Core.Logging.ILogger;
 
 namespace Application.UnitTests.Common
 {
@@ -18,6 +21,7 @@ namespace Application.UnitTests.Common
 
             Mapper = config.CreateMapper();
         }
+        
 
         public void Dispose()
         {

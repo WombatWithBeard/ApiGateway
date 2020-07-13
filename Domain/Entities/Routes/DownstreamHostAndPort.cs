@@ -7,7 +7,7 @@ namespace Domain.Entities.Routes
         [JsonIgnore] public int DownstreamHostAndPortId { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
-        
+
         [JsonIgnore] public int RouteId { get; set; }
     }
 }

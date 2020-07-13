@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.LoadBalancerOptions.Commands.DeleteLoadBalancerOption;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.LoadBalancerOptions.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.LoadBalancerOptions.Commands
 
         public DeleteLoadBalancerOptionUnitTests()
         {
-            _handler = new DeleteLoadBalancerOptionCommand.Handler(Context);
+            _handler = new DeleteLoadBalancerOptionCommand.Handler(Context, NullLogger<DeleteLoadBalancerOptionCommand.Handler>.Instance);
         }
 
         [Fact]

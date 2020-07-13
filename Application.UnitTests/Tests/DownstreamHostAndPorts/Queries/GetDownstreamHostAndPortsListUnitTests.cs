@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.DownstreamHostAndPorts.Queries.GetDownstreamHostAndPortsList;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Queries
@@ -12,7 +13,7 @@ namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Queries
 
         public GetDownstreamHostAndPortsListUnitTests()
         {
-            _handler = new GetDownstreamHostAndPortsListQuery.Handler(Context, Mapper);
+            _handler = new GetDownstreamHostAndPortsListQuery.Handler(Context, Mapper, NullLogger<GetDownstreamHostAndPortsListQuery.Handler>.Instance);
         }
 
         [Fact]

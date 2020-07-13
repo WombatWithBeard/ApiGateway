@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.DownstreamHostAndPorts.Commands.CreateDownstreamHostAndPort;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.DownstreamHostAndPorts.Commands
 
         public CreateDownstreamHostAndPortUnitTests()
         {
-            _handler = new CreateDownstreamHostAndPortCommand.Handler(Context, Mapper);
+            _handler = new CreateDownstreamHostAndPortCommand.Handler(Context, Mapper, NullLogger<CreateDownstreamHostAndPortCommand.Handler>.Instance);
         }
 
         [Fact]

@@ -18,7 +18,7 @@ namespace Application.CQRS.Ocelot.Routes.Commands.SaveRoutesJson
         public List<string> UpstreamHttpMethod { get; set; }
         public AuthenticationOptionJsonSaveDto AuthenticationOptions { get; set; }
         public LoadBalancerOption LoadBalancerOptions { get; set; }
-        
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Route, RoutesJsonSaveDto>()

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.GlobalConfigurations.Commands.CreateGlobalConfiguration;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.GlobalConfigurations.Commands
 
         public CreateGlobalConfigurationUnitTests()
         {
-            _handler = new CreateGlobalConfigurationCommand.Handler(Context, Mapper);
+            _handler = new CreateGlobalConfigurationCommand.Handler(Context, Mapper, NullLogger<CreateGlobalConfigurationCommand.Handler>.Instance);
         }
 
         [Fact]

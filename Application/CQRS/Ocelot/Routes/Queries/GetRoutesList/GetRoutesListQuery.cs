@@ -41,7 +41,7 @@ namespace Application.CQRS.Ocelot.Routes.Queries.GetRoutesList
                             .ProjectTo<RouteListDto>(_mapper.ConfigurationProvider)
                             .ToListAsync(cancellationToken)
                     };
-                
+
                     return vm;
                 }
                 catch (Exception e)

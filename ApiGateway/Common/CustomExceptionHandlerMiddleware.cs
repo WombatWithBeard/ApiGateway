@@ -43,11 +43,11 @@ namespace ApiGateway.Common
             }
 
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
+            context.Response.StatusCode = (int) code;
 
             if (result == string.Empty)
             {
-                result = JsonConvert.SerializeObject(new { error = exception.Message });
+                result = JsonConvert.SerializeObject(new {error = exception.Message});
             }
 
             return context.Response.WriteAsync(result);

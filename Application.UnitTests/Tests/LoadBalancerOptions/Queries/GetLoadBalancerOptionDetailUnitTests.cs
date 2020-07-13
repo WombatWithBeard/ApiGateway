@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOption;
 using Application.UnitTests.Common;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Application.UnitTests.Tests.LoadBalancerOptions.Queries
@@ -13,7 +14,7 @@ namespace Application.UnitTests.Tests.LoadBalancerOptions.Queries
 
         public GetLoadBalancerOptionDetailUnitTests()
         {
-            _handler = new GetLoadBalancerOptionDetailQuery.Handler(Context, Mapper);
+            _handler = new GetLoadBalancerOptionDetailQuery.Handler(Context, Mapper, NullLogger<GetLoadBalancerOptionDetailQuery.Handler>.Instance);
         }
 
         [Fact]

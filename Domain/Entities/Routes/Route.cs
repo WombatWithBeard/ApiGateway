@@ -4,7 +4,6 @@ using Domain.Entities.Common;
 
 namespace Domain.Entities.Routes
 {
-    
     /// <summary>
     /// Last route configuration https://ocelot.readthedocs.io/en/latest/features/configuration.html
     /// </summary>
