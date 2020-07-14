@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Xunit;
@@ -8,11 +9,12 @@ namespace ApiGateway.IntegrationTests.Controllers.AuthenticationOptions
 {
     public class Delete : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public Delete(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
         }
 
         [Fact]

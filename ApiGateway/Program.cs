@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Events;
 using Serilog.Formatting.Compact;
 
 namespace ApiGateway
@@ -15,7 +16,14 @@ namespace ApiGateway
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.File(new RenderedCompactJsonFormatter(), Directory.GetCurrentDirectory() + "/logs/log.ndjson")
+                .WriteTo.File(new RenderedCompactJsonFormatter(),
+                    Directory.GetCurrentDirectory() +
+                    $"/logs/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}_log.ndjson",
+                    LogEventLevel.Information)
+                .WriteTo.File(new RenderedCompactJsonFormatter(),
+                    Directory.GetCurrentDirectory() +
+                    $"/logs/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}_error.ndjson",
+                    LogEventLevel.Error)
                 .CreateLogger();
 
             try

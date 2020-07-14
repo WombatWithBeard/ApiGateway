@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Application.CQRS.Ocelot.Routes.Queries.GetRoutesList;
 using Application.UnitTests.Common;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Application.CQRS.Ocelot.LoadBalancerOptions.Queries.GetLoadBalancerOption;
@@ -9,11 +10,12 @@ namespace ApiGateway.IntegrationTests.Controllers.LoadBalancerOptions
 {
     public class Get : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public Get(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
         }
 
         [Fact]

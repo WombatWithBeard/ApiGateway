@@ -2,8 +2,10 @@
 using System.Linq;
 using Application.Common.Interfaces;
 using Infrastructure.Tools;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +16,7 @@ namespace ApiGateway.IntegrationTests.Common
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
+            builder.ConfigureTestServices(services =>
             {
                 var descriptor = services.SingleOrDefault(d =>
                     d.ServiceType == typeof(DbContextOptions<ApiGatewayDbContext>));
@@ -45,6 +47,10 @@ namespace ApiGateway.IntegrationTests.Common
                     logger.LogError(e, "An error occurred seeding the " +
                                        "database with test messages. Error: {Message}", e.Message);
                 }
+
+                services.AddAuthentication("Test")
+                    .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                        "Test", options => { });
             });
             base.ConfigureWebHost(builder);
         }

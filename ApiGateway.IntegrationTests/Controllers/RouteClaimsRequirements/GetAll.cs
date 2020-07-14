@@ -1,19 +1,20 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Application.CQRS.Ocelot.RouteClaimsRequirements.Queries.GetRouteClaimsRequirementsList;
-using Application.CQRS.Ocelot.Routes.Queries.GetRoutesList;
 using Xunit;
 
 namespace ApiGateway.IntegrationTests.Controllers.RouteClaimsRequirements
 {
     public class GetAll : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public GetAll(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
         }
 
         [Fact]

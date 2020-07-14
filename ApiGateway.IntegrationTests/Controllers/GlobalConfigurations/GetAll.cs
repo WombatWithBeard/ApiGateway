@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Application.CQRS.Ocelot.GlobalConfigurations.Queries.GetGlobalConfigurationsList;
@@ -8,11 +9,12 @@ namespace ApiGateway.IntegrationTests.Controllers.GlobalConfigurations
 {
     public class GetAll: IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public GetAll(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
         }
         
         [Fact]

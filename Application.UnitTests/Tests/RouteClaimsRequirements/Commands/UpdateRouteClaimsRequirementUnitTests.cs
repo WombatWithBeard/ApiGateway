@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.RouteClaimsRequirements.Commands.UpdateRouteClaimsRequirement;
-using Application.CQRS.Ocelot.Routes.Commands.UpdateRoute;
 using Application.UnitTests.Common;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;

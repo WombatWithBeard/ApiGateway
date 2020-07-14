@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ApiGateway.IntegrationTests.Common;
 using Domain.Entities.Routes;
@@ -13,6 +14,7 @@ namespace ApiGateway.IntegrationTests.Controllers.Routes
         public Create(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+            // _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
         }
 
         [Fact]

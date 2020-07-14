@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.CQRS.Ocelot.Routes.Queries.GetRoute;
 using Application.UnitTests.Common;
-using Castle.Core.Logging;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
